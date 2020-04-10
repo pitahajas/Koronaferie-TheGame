@@ -13,12 +13,15 @@ class MainWindow
 public:
 	
 	void Initialize();
+	void ShowWelcomeScreen();
 
 private:
-	 
+
 	int resolutionHeigth = 0;
 	int resolutionWidth = 0;
 	string windowName;
+
+	void ConfigRead();
 
 };
 

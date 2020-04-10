@@ -1,4 +1,4 @@
 Wysokosc: 
 1000
 Szerokosc: 
-500
+1000

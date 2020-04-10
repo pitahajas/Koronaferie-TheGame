@@ -10,7 +10,9 @@ int main()
 {
 
     MainWindow mainWindow;
-    mainWindow.Initialize();
+
+    mainWindow.Initialize(); //Initialization of the main game window
+    mainWindow.ShowWelcomeScreen(); //Displaying welcome animation loop
 
     waitKey(0); //DEBUG ONLY
     return 0;
