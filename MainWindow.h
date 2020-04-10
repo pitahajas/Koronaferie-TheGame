@@ -13,16 +13,11 @@ class MainWindow
 public:
 	
 	void Initialize();
-	void setResolution();
-	void setResolution(int,int);
-	void setWindowName(string);
-	void makeWindow();
-	void showWelcome();
 
 private:
 	 
-	int resolutionHeigth;
-	int resolutionWidth;
+	int resolutionHeigth = 0;
+	int resolutionWidth = 0;
 	string windowName;
 
 };
