@@ -8,13 +8,11 @@ using namespace std;
 using namespace cv; 
 
 
-class MakeWindow
+class MainWindow
 {
 public:
-	int resolutionHeigth;
-	int resolutionWidth;
-	string windowName;
 	
+	void Initialize();
 	void setResolution();
 	void setResolution(int,int);
 	void setWindowName(string);
@@ -23,7 +21,9 @@ public:
 
 private:
 	 
-
+	int resolutionHeigth;
+	int resolutionWidth;
+	string windowName;
 
 };
 

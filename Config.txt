@@ -1,0 +1,4 @@
+﻿Szerokość okna gry:
+1000
+Wysokość okna gry:
+1000
