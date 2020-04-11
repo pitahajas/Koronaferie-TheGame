@@ -5,6 +5,7 @@
 #include <sstream> 
 #include<string>
 #include <windows.h>
+#include<filesystem>
 
 using namespace std;
 using namespace cv;
@@ -49,22 +50,18 @@ void MainWindow::ConfigRead()
 }
 
 void MainWindow::ShowWelcomeScreen() {
-   
-    Mat frame1 = imread("zamek1.jpg", CV_LOAD_IMAGE_COLOR);   // Read the first frame file;
-    Mat frame2 = imread("zamek2.jpg", CV_LOAD_IMAGE_COLOR);   // Read the second frame file;
 
     while (true) //Image animation loop
     {
-        imshow(windowName, frame1);  
-        if (cvWaitKey(500) == 13) //if ENTER is pressed, kill animation loop.
-        { 
-            return;
-        }
 
-        imshow(windowName, frame2);
-        if (cvWaitKey(500) == 13) //if ENTER is pressed, kill animation loop.
-        { 
-            return;
+        for (int frameCounter = 1; frameCounter <= 6; frameCounter++) {
+
+            imshow(windowName, imread("menu" + to_string(frameCounter) + ".jpg", CV_LOAD_IMAGE_COLOR));
+            if (cvWaitKey(50) == 13) //if ENTER is pressed, kill animation loop.
+            {
+                return;
+            }
+
         }
         
     }

@@ -160,8 +160,12 @@
     <Text Include="Config.txt" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="zamek1.jpg" />
-    <Image Include="zamek2.jpg" />
+    <Image Include="menu1.jpg" />
+    <Image Include="menu2.jpg" />
+    <Image Include="menu3.jpg" />
+    <Image Include="menu4.jpg" />
+    <Image Include="menu5.jpg" />
+    <Image Include="menu6.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

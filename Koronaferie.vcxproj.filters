@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Resource Files\MenuAnimation">
+      <UniqueIdentifier>{0f3ba110-c282-4494-b636-17bc9eeb1449}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Koronaferie.cpp">
@@ -33,11 +36,23 @@
     </Text>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="zamek2.jpg">
-      <Filter>Resource Files</Filter>
+    <Image Include="menu5.jpg">
+      <Filter>Resource Files\MenuAnimation</Filter>
     </Image>
-    <Image Include="zamek1.jpg">
-      <Filter>Resource Files</Filter>
+    <Image Include="menu6.jpg">
+      <Filter>Resource Files\MenuAnimation</Filter>
+    </Image>
+    <Image Include="menu1.jpg">
+      <Filter>Resource Files\MenuAnimation</Filter>
+    </Image>
+    <Image Include="menu2.jpg">
+      <Filter>Resource Files\MenuAnimation</Filter>
+    </Image>
+    <Image Include="menu3.jpg">
+      <Filter>Resource Files\MenuAnimation</Filter>
+    </Image>
+    <Image Include="menu4.jpg">
+      <Filter>Resource Files\MenuAnimation</Filter>
     </Image>
   </ItemGroup>
 </Project>
