@@ -11,9 +11,9 @@ int main()
 
     MainWindow mainWindow;
 
-    mainWindow.Initialize(); //Initialization of the main game window
-    mainWindow.ShowWelcomeScreen(); //Displaying welcome animation loop
+    mainWindow.initialize(); //Initialization of the main game window
+    mainWindow.showWelcomeScreen(); //Displaying welcome animation loop
+    mainWindow.chooseCharacter();
 
-    waitKey(0); //DEBUG ONLY
     return 0;
 }

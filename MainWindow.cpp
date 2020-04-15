@@ -12,16 +12,12 @@ using namespace cv;
 
 
 
-void MainWindow::Initialize()   //Initialization of main game window.
+void MainWindow::initialize()   //Initialization of main game window.
 {
-        ConfigRead(); //Setting up and reading window configuration from text file.
-
-        Mat window = Mat(resolutionHeigth, resolutionWidth, CV_16U); //Creating Mat Matrix of resolution set in Config.txt
-        imshow(windowName, window);
-
+        configRead(); //Setting up and reading window configuration from text file.
 }
 
-void MainWindow::ConfigRead()
+void MainWindow::configRead()
 {
     string line;
     windowName = "Koronaferie";
@@ -49,7 +45,7 @@ void MainWindow::ConfigRead()
     configReader.close(); //Closing Config.txt file
 }
 
-void MainWindow::ShowWelcomeScreen() {
+void MainWindow::showWelcomeScreen() {
 
     while (true) //Image animation loop
     {
@@ -66,5 +62,53 @@ void MainWindow::ShowWelcomeScreen() {
         
     }
         
+}
+
+void MainWindow::chooseCharacter() {
+
+    int rectMoveX = 0;
+    int choosedCharacter = 3;
+    Mat CharacterMenu = Mat(resolutionHeigth, resolutionWidth, CV_16U); //Creating Mat Matrix of resolution set in Config.txt
+    CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR); //Loads basic character menu background
+    rectangle(CharacterMenu, Point(395 + rectMoveX, 400), Point(555 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
+    imshow(windowName, CharacterMenu);
+
+    while (true) {
+        
+        int pressedKey = cvWaitKey(1);
+
+        //if (pressedKey != -1) //-------------------------------->KEYCODECHECKER
+        //{
+        //    cout << to_string(pressedKey) << endl; 
+        //}
+
+        if ((pressedKey == 2555904) && (choosedCharacter != 5)) //right arrow 
+        {
+            rectMoveX += 180;
+            choosedCharacter += 1;
+            cout << "rightarrow postac: " << to_string(choosedCharacter) << endl;
+
+            CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR);
+            rectangle(CharacterMenu, Point(390 + rectMoveX, 400), Point(560 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
+            imshow(windowName, CharacterMenu);
+        }
+
+        if ((pressedKey == 2424832) && (choosedCharacter != 1)) //left arrow 
+        {
+            rectMoveX -= 180;
+            choosedCharacter--;
+            cout << "leftarrow postac: " << to_string(choosedCharacter) << endl;
+
+            CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR);
+            rectangle(CharacterMenu, Point(390 + rectMoveX, 400), Point(560 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
+            imshow(windowName, CharacterMenu);
+        }
+
+        if (pressedKey == 13) //if ENTER is pressed
+        {
+            return;
+        }
+        
+    }
 }
 

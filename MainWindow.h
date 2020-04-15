@@ -12,8 +12,9 @@ class MainWindow
 {
 public:
 	
-	void Initialize();
-	void ShowWelcomeScreen();
+	void initialize();
+	void showWelcomeScreen();
+	void chooseCharacter();
 
 private:
 
@@ -21,7 +22,7 @@ private:
 	int resolutionWidth = 0;
 	string windowName;
 
-	void ConfigRead();
+	void configRead();
 
 };
 
