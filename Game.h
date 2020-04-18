@@ -8,7 +8,7 @@ using namespace std;
 using namespace cv; 
 
 
-class MainWindow
+class Game
 {
 public:
 	

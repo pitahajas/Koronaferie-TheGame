@@ -1,4 +1,6 @@
-﻿#include "MainWindow.h"
+﻿#include "Game.h"
+#include "Character.h"
+
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include<fstream>
@@ -6,18 +8,19 @@
 #include<string>
 #include <windows.h>
 #include<filesystem>
+#include <time.h> 
 
 using namespace std;
 using namespace cv;
 
 
 
-void MainWindow::initialize()   //Initialization of main game window.
+void Game::initialize()   //Initialization of main game window.
 {
         configRead(); //Setting up and reading window configuration from text file.
 }
 
-void MainWindow::configRead()
+void Game::configRead()
 {
     string line;
     windowName = "Koronaferie";
@@ -45,7 +48,7 @@ void MainWindow::configRead()
     configReader.close(); //Closing Config.txt file
 }
 
-void MainWindow::showWelcomeScreen() {
+void Game::showWelcomeScreen() {
 
     while (true) //Image animation loop
     {
@@ -64,7 +67,7 @@ void MainWindow::showWelcomeScreen() {
         
 }
 
-void MainWindow::chooseCharacter() {
+void Game::chooseCharacter() {
 
     int rectMoveX = 0;
     int choosedCharacter = 3;
@@ -106,7 +109,55 @@ void MainWindow::chooseCharacter() {
 
         if (pressedKey == 13) //if ENTER is pressed
         {
-            return;
+            CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR);
+            rectangle(CharacterMenu, Point(300,300), Point(700,700), Scalar(255, 255, 255), CV_FILLED, 0);
+            rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(0, 0, 0), 1, 0);
+            putText(CharacterMenu, "Wpisz nazwe postaci:", Point(320, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(0,0,0), 1, 8, false);
+            imshow(windowName, CharacterMenu);
+
+            std::string currentCharacterName;
+            int pressedKey = 0;
+            srand(time(NULL));
+            int randR = 0;
+            int randG = 0;
+            int randB = 0;
+
+            while (true) {
+
+                pressedKey = waitKey(500);
+                //randR = rand() % 255 - 10;
+                //randG = rand() % 255 - 10;
+                //randB = rand() % 255 - 10;
+
+     
+                    if ((pressedKey != -1) && (pressedKey != 13))
+                    {
+                        if ((pressedKey == 8) && (currentCharacterName.length() != 0))
+                        {
+                            currentCharacterName.pop_back();
+                            cout << "DEBUG INFO: Aktualna nazwa postaci: " << currentCharacterName << endl;
+                        }
+                        else if (currentCharacterName.length() < 20)
+                        {
+                            currentCharacterName.push_back((char)pressedKey);
+                            cout << "DEBUG INFO: Aktualna nazwa postaci: " << currentCharacterName << endl;
+                        }
+
+                        rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(255, 255, 255), CV_FILLED, 0);
+                        putText(CharacterMenu, currentCharacterName, Point(320, 500), FONT_HERSHEY_COMPLEX, 0.7, Scalar(0, 0, 0), 1, 8, false);
+                    }
+
+                    if (pressedKey == 13) {
+                        Character Player;
+                        Player.characterName == currentCharacterName;
+                        return;
+                    }
+                    rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(rand() % 255 - 10, rand() % 255 - 10, rand() % 255 - 10), 4, 0);
+                    putText(CharacterMenu, "Wpisz nazwe postaci:", Point(320, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(0, 0, 0), 1, 8, false);
+                    putText(CharacterMenu, "Jesli skonczyles edytowanie nazwy postaci kliknij ENTER", Point(305, 680), FONT_HERSHEY_COMPLEX, 0.4, Scalar(0, 0, 0), 1, 8, false);
+                    imshow(windowName, CharacterMenu);
+            }
+            waitKey(0);
         }
         
     }

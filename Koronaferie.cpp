@@ -1,7 +1,7 @@
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include<windows.h>
-#include "MainWindow.h"
+#include "Game.h"
 
 using namespace std;
 using namespace cv;
@@ -9,11 +9,11 @@ using namespace cv;
 int main()
 {
 
-    MainWindow mainWindow;
+    Game Koronaferie;
 
-    mainWindow.initialize(); //Initialization of the main game window
-    mainWindow.showWelcomeScreen(); //Displaying welcome animation loop
-    mainWindow.chooseCharacter();
+    Koronaferie.initialize(); //Initialization of the main game window
+    Koronaferie.showWelcomeScreen(); //Displaying welcome animation loop
+    Koronaferie.chooseCharacter();
 
     return 0;
 }

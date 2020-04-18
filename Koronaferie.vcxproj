@@ -151,10 +151,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Koronaferie.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Character.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MainWindow.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="Character.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Config.txt" />
