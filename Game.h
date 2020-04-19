@@ -18,8 +18,8 @@ public:
 
 private:
 
-	int resolutionHeigth = 0;
-	int resolutionWidth = 0;
+	int resolutionHeigth;
+	int resolutionWidth;
 	string windowName;
 
 	void configRead();

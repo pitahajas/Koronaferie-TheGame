@@ -1,14 +1,15 @@
 ﻿#include "Game.h"
 #include "Character.h"
 
-#include<opencv2/opencv.hpp>
+
 #include<iostream>
 #include<fstream>
 #include <sstream> 
 #include<string>
 #include <windows.h>
 #include<filesystem>
-#include <time.h> 
+#include <time.h>
+#include<opencv2/opencv.hpp>
 
 using namespace std;
 using namespace cv;
@@ -40,6 +41,7 @@ void Game::configRead()
         stringstream width(line);
         width >> resolutionWidth;
         cout << "DEBUG INFO: Ustawiona w pliku Config.txt szerokosc okna wynosi:" << resolutionWidth << "px" << endl;
+        cout << "DEBUG INFO: Poprawnie odczytano rozdzielczość okna z pliku" << endl;
     }
     else
     {
@@ -50,6 +52,7 @@ void Game::configRead()
 
 void Game::showWelcomeScreen() {
 
+    cout << "DEBUG INFO: Zaczynam wyswietlac animacje" << endl;
     while (true) //Image animation loop
     {
 
@@ -58,6 +61,7 @@ void Game::showWelcomeScreen() {
             imshow(windowName, imread("menu" + to_string(frameCounter) + ".jpg", CV_LOAD_IMAGE_COLOR));
             if (cvWaitKey(50) == 13) //if ENTER is pressed, kill animation loop.
             {
+                cout << "DEBUG INFO: Wcisnieto ENTER, przechodze do wyboru postaci" << endl;
                 return;
             }
 
@@ -70,11 +74,13 @@ void Game::showWelcomeScreen() {
 void Game::chooseCharacter() {
 
     int rectMoveX = 0;
-    int choosedCharacter = 3;
+    int chosenCharacter = 3;
     Mat CharacterMenu = Mat(resolutionHeigth, resolutionWidth, CV_16U); //Creating Mat Matrix of resolution set in Config.txt
     CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR); //Loads basic character menu background
     rectangle(CharacterMenu, Point(395 + rectMoveX, 400), Point(555 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
     imshow(windowName, CharacterMenu);
+    cout << "DEBUG INFO: Poprawnie zaladowano ekran wyb. post." << endl;
+
 
     while (true) {
         
@@ -85,22 +91,22 @@ void Game::chooseCharacter() {
         //    cout << to_string(pressedKey) << endl; 
         //}
 
-        if ((pressedKey == 2555904) && (choosedCharacter != 5)) //right arrow 
+        if ((pressedKey == 2555904) && (chosenCharacter != 5)) //right arrow 
         {
             rectMoveX += 180;
-            choosedCharacter += 1;
-            cout << "rightarrow postac: " << to_string(choosedCharacter) << endl;
+            chosenCharacter += 1;
+            cout << "rightarrow postac: " << to_string(chosenCharacter) << endl;
 
             CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR);
             rectangle(CharacterMenu, Point(390 + rectMoveX, 400), Point(560 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
             imshow(windowName, CharacterMenu);
         }
 
-        if ((pressedKey == 2424832) && (choosedCharacter != 1)) //left arrow 
+        if ((pressedKey == 2424832) && (chosenCharacter != 1)) //left arrow 
         {
             rectMoveX -= 180;
-            choosedCharacter--;
-            cout << "leftarrow postac: " << to_string(choosedCharacter) << endl;
+            chosenCharacter--;
+            cout << "leftarrow postac: " << to_string(chosenCharacter) << endl;
 
             CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR);
             rectangle(CharacterMenu, Point(390 + rectMoveX, 400), Point(560 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
@@ -116,11 +122,8 @@ void Game::chooseCharacter() {
             imshow(windowName, CharacterMenu);
 
             std::string currentCharacterName;
-            int pressedKey = 0;
+            pressedKey = 0;
             srand(time(NULL));
-            int randR = 0;
-            int randG = 0;
-            int randB = 0;
 
             while (true) {
 
@@ -149,10 +152,11 @@ void Game::chooseCharacter() {
 
                     if (pressedKey == 13) {
                         Character Player;
-                        Player.characterName == currentCharacterName;
+                        Player.characterName = currentCharacterName;
+                        cout << "Wybrano postac: " << chosenCharacter << ",jej nazwa to: " << Player.characterName;
                         return;
                     }
-                    rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(rand() % 255 - 10, rand() % 255 - 10, rand() % 255 - 10), 4, 0);
+                    rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar((rand() % 255) - 10, (rand() % 255) - 10, (rand() % 255) - 10), 4, 0);
                     putText(CharacterMenu, "Wpisz nazwe postaci:", Point(320, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(0, 0, 0), 1, 8, false);
                     putText(CharacterMenu, "Jesli skonczyles edytowanie nazwy postaci kliknij ENTER", Point(305, 680), FONT_HERSHEY_COMPLEX, 0.4, Scalar(0, 0, 0), 1, 8, false);
                     imshow(windowName, CharacterMenu);
