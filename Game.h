@@ -15,6 +15,7 @@ public:
 	void initialize();
 	void showWelcomeScreen();
 	void chooseCharacter();
+	void initializeMap();
 
 private:
 
