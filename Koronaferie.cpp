@@ -14,6 +14,6 @@ int main()
     Koronaferie.initialize(); //Initialization of the main game window
     Koronaferie.showWelcomeScreen(); //Displaying welcome animation loop
     Koronaferie.chooseCharacter();
-
+    Koronaferie.initializeMap();
     return 0;
 }

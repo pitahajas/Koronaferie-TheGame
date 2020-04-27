@@ -9,7 +9,7 @@
 #include <windows.h>
 #include<filesystem>
 #include <time.h>
-#include<opencv2/opencv.hpp>
+#include<opencv2\opencv.hpp>
 
 using namespace std;
 using namespace cv;
@@ -58,8 +58,8 @@ void Game::showWelcomeScreen() {
 
         for (int frameCounter = 1; frameCounter <= 6; frameCounter++) {
 
-            imshow(windowName, imread("menu" + to_string(frameCounter) + ".jpg", CV_LOAD_IMAGE_COLOR));
-            if (cvWaitKey(50) == 13) //if ENTER is pressed, kill animation loop.
+            imshow(windowName, imread("menu" + to_string(frameCounter) + ".jpg", IMREAD_COLOR));
+            if (waitKey(50) == 13) //if ENTER is pressed, kill animation loop.
             {
                 cout << "DEBUG INFO: Wcisnieto ENTER, przechodze do wyboru postaci" << endl;
                 return;
@@ -76,7 +76,7 @@ void Game::chooseCharacter() {
     int rectMoveX = 0;
     int chosenCharacter = 3;
     Mat CharacterMenu = Mat(resolutionHeigth, resolutionWidth, CV_16U); //Creating Mat Matrix of resolution set in Config.txt
-    CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR); //Loads basic character menu background
+    CharacterMenu = imread("charactermenu.jpg", IMREAD_COLOR); //Loads basic character menu background
     rectangle(CharacterMenu, Point(395 + rectMoveX, 400), Point(555 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
     imshow(windowName, CharacterMenu);
     cout << "DEBUG INFO: Poprawnie zaladowano ekran wyb. post." << endl;
@@ -84,7 +84,7 @@ void Game::chooseCharacter() {
 
     while (true) {
         
-        int pressedKey = cvWaitKey(1);
+        int pressedKey = waitKey(1);
 
         //if (pressedKey != -1) //-------------------------------->KEYCODECHECKER
         //{
@@ -97,7 +97,7 @@ void Game::chooseCharacter() {
             chosenCharacter += 1;
             cout << "rightarrow postac: " << to_string(chosenCharacter) << endl;
 
-            CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR);
+            CharacterMenu = imread("charactermenu.jpg", IMREAD_COLOR);
             rectangle(CharacterMenu, Point(390 + rectMoveX, 400), Point(560 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
             imshow(windowName, CharacterMenu);
         }
@@ -108,15 +108,15 @@ void Game::chooseCharacter() {
             chosenCharacter--;
             cout << "leftarrow postac: " << to_string(chosenCharacter) << endl;
 
-            CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR);
+            CharacterMenu = imread("charactermenu.jpg", IMREAD_COLOR);
             rectangle(CharacterMenu, Point(390 + rectMoveX, 400), Point(560 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
             imshow(windowName, CharacterMenu);
         }
 
         if (pressedKey == 13) //if ENTER is pressed
         {
-            CharacterMenu = imread("charactermenu.jpg", CV_LOAD_IMAGE_COLOR);
-            rectangle(CharacterMenu, Point(300,300), Point(700,700), Scalar(255, 255, 255), CV_FILLED, 0);
+            CharacterMenu = imread("charactermenu.jpg", IMREAD_COLOR);
+            rectangle(CharacterMenu, Point(300,300), Point(700,700), Scalar(255, 255, 255), FILLED, 0);
             rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(0, 0, 0), 1, 0);
             putText(CharacterMenu, "Wpisz nazwe postaci:", Point(320, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(0,0,0), 1, 8, false);
             imshow(windowName, CharacterMenu);
@@ -146,7 +146,7 @@ void Game::chooseCharacter() {
                             cout << "DEBUG INFO: Aktualna nazwa postaci: " << currentCharacterName << endl;
                         }
 
-                        rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(255, 255, 255), CV_FILLED, 0);
+                        rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(255, 255, 255), FILLED, 0);
                         putText(CharacterMenu, currentCharacterName, Point(320, 500), FONT_HERSHEY_COMPLEX, 0.7, Scalar(0, 0, 0), 1, 8, false);
                     }
 
@@ -167,3 +167,13 @@ void Game::chooseCharacter() {
     }
 }
 
+void Game::initializeMap()
+{
+    Mat src = Mat(10000, 1000, CV_16U); //Creating a Mat matrix for the full map
+    src = imread("map_proto.jpg", IMREAD_COLOR); //Storing the full map
+    Mat Map = src(Range(9000, 10000), Range(0, 1000)); //Extracting Initial Region of Interest for the window and storing in ne matrix
+    imshow(windowName, Map);
+    cout << "Zaladowano mape.";
+
+    waitKey();
+}
