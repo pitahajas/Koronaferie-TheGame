@@ -91,7 +91,7 @@ void Game::chooseCharacter() {
         //    cout << to_string(pressedKey) << endl; 
         //}
 
-        if ((pressedKey == 2555904) && (chosenCharacter != 5)) //right arrow 
+        if ((pressedKey == 100) && (chosenCharacter != 5)) //right arrow 
         {
             rectMoveX += 180;
             chosenCharacter += 1;
@@ -102,7 +102,7 @@ void Game::chooseCharacter() {
             imshow(windowName, CharacterMenu);
         }
 
-        if ((pressedKey == 2424832) && (chosenCharacter != 1)) //left arrow 
+        if ((pressedKey == 97) && (chosenCharacter != 1)) //left arrow 
         {
             rectMoveX -= 180;
             chosenCharacter--;
@@ -153,7 +153,7 @@ void Game::chooseCharacter() {
                     if (pressedKey == 13) {
                         Character Player;
                         Player.characterName = currentCharacterName;
-                        cout << "Wybrano postac: " << chosenCharacter << ",jej nazwa to: " << Player.characterName;
+                        cout << "Wybrano postac: " << chosenCharacter << ", jej nazwa to: " << Player.characterName;
                         return;
                     }
                     rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar((rand() % 255) - 10, (rand() % 255) - 10, (rand() % 255) - 10), 4, 0);
@@ -169,11 +169,10 @@ void Game::chooseCharacter() {
 
 void Game::initializeMap()
 {
-    Mat src = Mat(10000, 1000, CV_16U); //Creating a Mat matrix for the full map
-    src = imread("map_proto.jpg", IMREAD_COLOR); //Storing the full map
-    Mat Map = src(Range(9000, 10000), Range(0, 1000)); //Extracting Initial Region of Interest for the window and storing in ne matrix
-    imshow(windowName, Map);
-    cout << "Zaladowano mape.";
-
+    Mat src = Mat(10000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
+    src = imread("Map.jpg", IMREAD_COLOR); //Storing the full map
+    Mat map = src(Range(9000, 10000), Range(0, 1000)); //Extracting Initial Region of Interest for the window and storing it in the matrix
+    imshow(windowName, map);
+    cout << "\nZaladowano mape.";
     waitKey();
 }
