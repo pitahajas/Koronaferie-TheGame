@@ -16,12 +16,18 @@ public:
 	void showWelcomeScreen();
 	void chooseCharacter();
 	void initializeMap();
+	void runMap();
 
 private:
 
 	int resolutionHeigth;
 	int resolutionWidth;
+	int mapSpeed;
+	int mapPosition;
+	int mapMilestone;
 	string windowName;
+	Mat src;
+	Mat map;
 
 	void configRead();
 
