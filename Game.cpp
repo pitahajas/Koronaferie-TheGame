@@ -169,10 +169,32 @@ void Game::chooseCharacter() {
 
 void Game::initializeMap()
 {
-    Mat src = Mat(10000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
+    src = Mat(11000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
     src = imread("Map.jpg", IMREAD_COLOR); //Storing the full map
-    Mat map = src(Range(9000, 10000), Range(0, 1000)); //Extracting Initial Region of Interest for the window and storing it in the matrix
+    map = src(Range(10000, 11000), Range(0, 1000)); //Extracting Initial Region of Interest for the window and storing it in the matrix
     imshow(windowName, map);
     cout << "\nZaladowano mape.";
+    mapSpeed = 6;  
+    mapPosition = 0;
+    mapMilestone = 0; 
+    //^ Initial variable values, used in Game::runMap()
     waitKey();
+}
+
+void Game::runMap()
+{
+    map = src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000));
+    imshow(windowName, map);
+    mapPosition += mapSpeed;
+    if(mapPosition >=10000)
+        mapPosition -= 10000;
+    cout << "\nPozycja mapy: " << mapPosition;
+    mapMilestone += mapSpeed; //Tracking milestones every 1000 pixels for speed incrementation.
+    if (mapMilestone >= 1000)
+    {
+        mapSpeed += 1;
+        mapMilestone -= 1000;
+        cout << "\nMAP SPEED +2 = " << mapSpeed;
+    }
+    Sleep(10);
 }
