@@ -11,7 +11,9 @@ using namespace cv;
 class Game
 {
 public:
-	
+	int resolutionHeigth;
+	int resolutionWidth;
+
 	void initialize();
 	void showWelcomeScreen();
 	void chooseCharacter();
@@ -20,8 +22,7 @@ public:
 
 private:
 
-	int resolutionHeigth;
-	int resolutionWidth;
+
 	int mapSpeed;
 	int mapPosition;
 	int mapMilestone;
@@ -32,4 +33,5 @@ private:
 	void configRead();
 
 };
+
 
