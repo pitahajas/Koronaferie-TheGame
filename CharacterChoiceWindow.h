@@ -1,3 +1,4 @@
+
 #ifndef __wtypes_h__
 #include <wtypes.h>
 #endif
@@ -44,6 +45,5 @@ private:
 
 	int rectMoveX = 0;
 	int pressedKey = 0;
-
 
 };

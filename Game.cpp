@@ -101,7 +101,9 @@ void Game::chooseCharacter() {
             Character Player;
             Player.characterName = ChoiceWindow.chosenCharacterName;
             cout << "Wybrano postac: " << ChoiceWindow.chosenCharacter << ", jej nazwa to: " << Player.characterName;
+
             return;
+
         }
     }
 }
