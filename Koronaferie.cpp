@@ -16,8 +16,18 @@ int main()
     Koronaferie.chooseCharacter();
     Koronaferie.initializeMap();
 
-    while (waitKey(1)!=32)
+    while (true)
+    {
         Koronaferie.runMap();
+
+        if (waitKey(1) == 32) //Pressing space
+        {
+            string input = Koronaferie.pauseGame();
+            if (input == "Escape")
+                return 0;
+        }
+    }
+
 
     return 0;
 }

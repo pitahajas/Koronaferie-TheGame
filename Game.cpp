@@ -101,6 +101,9 @@ void Game::chooseCharacter() {
             Character Player;
             Player.characterName = ChoiceWindow.chosenCharacterName;
             cout << "Wybrano postac: " << ChoiceWindow.chosenCharacter << ", jej nazwa to: " << Player.characterName;
+
+            return;
+
         }
     }
 }
@@ -132,7 +135,24 @@ void Game::runMap()
     {
         mapSpeed += 1;
         mapMilestone -= 1000;
-        cout << "\nMAP SPEED +2 = " << mapSpeed;
+        cout << "\nMAP SPEED +1 = " << mapSpeed;
     }
     Sleep(10);
+}
+
+string Game::pauseGame()
+{
+   // Mat pauza = Mat(400, 400, CV_32FC3);
+   // pauza = imread("Menu_pauzy.jpg", IMREAD_COLOR);
+    map = imread("Menu_pauzy.jpg", IMREAD_COLOR);
+    imshow(windowName, map);
+    char input;
+    while (true)
+    {
+        input = waitKey();
+        if (input == 27)
+            return "Escape";
+        else if (input == 32)
+            return "Space";
+    }
 }

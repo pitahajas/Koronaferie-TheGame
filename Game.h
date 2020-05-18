@@ -19,6 +19,8 @@ public:
 	void chooseCharacter();
 	void initializeMap();
 	void runMap();
+	string pauseGame();
+
 
 private:
 

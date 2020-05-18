@@ -1,3 +1,12 @@
+
+#ifndef __wtypes_h__
+#include <wtypes.h>
+#endif
+
+#ifndef __WINDEF_
+#include <windef.h>
+#endif
+
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include <string>
@@ -33,8 +42,8 @@ public:
 private:
 
 
+
 	int rectMoveX = 0;
 	int pressedKey = 0;
-
 
 };
