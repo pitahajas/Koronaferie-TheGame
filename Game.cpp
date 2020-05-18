@@ -1,5 +1,6 @@
 ﻿#include "Game.h"
 #include "Character.h"
+#include "CharacterChoiceWindow.h"
 
 
 #include<iostream>
@@ -73,97 +74,35 @@ void Game::showWelcomeScreen() {
 
 void Game::chooseCharacter() {
 
-    int rectMoveX = 0;
-    int chosenCharacter = 3;
-    Mat CharacterMenu = Mat(resolutionHeigth, resolutionWidth, CV_16U); //Creating Mat Matrix of resolution set in Config.txt
-    CharacterMenu = imread("charactermenu.jpg", IMREAD_COLOR); //Loads basic character menu background
-    rectangle(CharacterMenu, Point(395 + rectMoveX, 400), Point(555 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
-    imshow(windowName, CharacterMenu);
-    cout << "DEBUG INFO: Poprawnie zaladowano ekran wyb. post." << endl;
-
+    CharacterChoiceWindow ChoiceWindow;
+    ChoiceWindow.initialize(resolutionHeigth, resolutionWidth, windowName);
 
     while (true) {
-        
+
         int pressedKey = waitKey(1);
 
-        //if (pressedKey != -1) //-------------------------------->KEYCODECHECKER
-        //{
-        //    cout << to_string(pressedKey) << endl; 
-        //}
-
-        if ((pressedKey == 100) && (chosenCharacter != 5)) //right arrow 
+        if ((pressedKey == 100) && (ChoiceWindow.chosenCharacter != 5)) //right arrow 
         {
-            rectMoveX += 180;
-            chosenCharacter += 1;
-            cout << "rightarrow postac: " << to_string(chosenCharacter) << endl;
-
-            CharacterMenu = imread("charactermenu.jpg", IMREAD_COLOR);
-            rectangle(CharacterMenu, Point(390 + rectMoveX, 400), Point(560 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
-            imshow(windowName, CharacterMenu);
+            ChoiceWindow.moveRectangle("right");
+            ChoiceWindow.rectangleUpdate(windowName);
         }
 
-        if ((pressedKey == 97) && (chosenCharacter != 1)) //left arrow 
+        if ((pressedKey == 97) && (ChoiceWindow.chosenCharacter != 1)) //left arrow 
         {
-            rectMoveX -= 180;
-            chosenCharacter--;
-            cout << "leftarrow postac: " << to_string(chosenCharacter) << endl;
-
-            CharacterMenu = imread("charactermenu.jpg", IMREAD_COLOR);
-            rectangle(CharacterMenu, Point(390 + rectMoveX, 400), Point(560 + rectMoveX, 580), Scalar(0, 240, 255), 3, 8);
-            imshow(windowName, CharacterMenu);
+            ChoiceWindow.moveRectangle("left");
+            ChoiceWindow.rectangleUpdate(windowName);
         }
 
         if (pressedKey == 13) //if ENTER is pressed
         {
-            CharacterMenu = imread("charactermenu.jpg", IMREAD_COLOR);
-            rectangle(CharacterMenu, Point(300,300), Point(700,700), Scalar(255, 255, 255), FILLED, 0);
-            rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(0, 0, 0), 1, 0);
-            putText(CharacterMenu, "Wpisz nazwe postaci:", Point(320, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(0,0,0), 1, 8, false);
-            imshow(windowName, CharacterMenu);
+            ChoiceWindow.textboxInitialize(windowName);
+            ChoiceWindow.textboxUpdate(windowName);
 
-            std::string currentCharacterName;
-            pressedKey = 0;
-            srand(time(NULL));
-
-            while (true) {
-
-                pressedKey = waitKey(500);
-                //randR = rand() % 255 - 10;
-                //randG = rand() % 255 - 10;
-                //randB = rand() % 255 - 10;
-
-     
-                    if ((pressedKey != -1) && (pressedKey != 13))
-                    {
-                        if ((pressedKey == 8) && (currentCharacterName.length() != 0))
-                        {
-                            currentCharacterName.pop_back();
-                            cout << "DEBUG INFO: Aktualna nazwa postaci: " << currentCharacterName << endl;
-                        }
-                        else if (currentCharacterName.length() < 20)
-                        {
-                            currentCharacterName.push_back((char)pressedKey);
-                            cout << "DEBUG INFO: Aktualna nazwa postaci: " << currentCharacterName << endl;
-                        }
-
-                        rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar(255, 255, 255), FILLED, 0);
-                        putText(CharacterMenu, currentCharacterName, Point(320, 500), FONT_HERSHEY_COMPLEX, 0.7, Scalar(0, 0, 0), 1, 8, false);
-                    }
-
-                    if (pressedKey == 13) {
-                        Character Player;
-                        Player.characterName = currentCharacterName;
-                        cout << "Wybrano postac: " << chosenCharacter << ", jej nazwa to: " << Player.characterName;
-                        return;
-                    }
-                    rectangle(CharacterMenu, Point(300, 300), Point(700, 700), Scalar((rand() % 255) - 10, (rand() % 255) - 10, (rand() % 255) - 10), 4, 0);
-                    putText(CharacterMenu, "Wpisz nazwe postaci:", Point(320, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(0, 0, 0), 1, 8, false);
-                    putText(CharacterMenu, "Jesli skonczyles edytowanie nazwy postaci kliknij ENTER", Point(305, 680), FONT_HERSHEY_COMPLEX, 0.4, Scalar(0, 0, 0), 1, 8, false);
-                    imshow(windowName, CharacterMenu);
-            }
-            waitKey(0);
+            Character Player;
+            Player.characterName = ChoiceWindow.chosenCharacterName;
+            cout << "Wybrano postac: " << ChoiceWindow.chosenCharacter << ", jej nazwa to: " << Player.characterName;
+            return;
         }
-        
     }
 }
 
@@ -194,7 +133,24 @@ void Game::runMap()
     {
         mapSpeed += 1;
         mapMilestone -= 1000;
-        cout << "\nMAP SPEED +2 = " << mapSpeed;
+        cout << "\nMAP SPEED +1 = " << mapSpeed;
     }
     Sleep(10);
+}
+
+string Game::pauseGame()
+{
+   // Mat pauza = Mat(400, 400, CV_32FC3);
+   // pauza = imread("Menu_pauzy.jpg", IMREAD_COLOR);
+    map = imread("Menu_pauzy.jpg", IMREAD_COLOR);
+    imshow(windowName, map);
+    char input;
+    while (true)
+    {
+        input = waitKey();
+        if (input == 27)
+            return "Escape";
+        else if (input == 32)
+            return "Space";
+    }
 }
