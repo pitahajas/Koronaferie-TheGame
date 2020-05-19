@@ -9,6 +9,8 @@
 #include <windows.h>
 #include <time.h>
 #include<opencv2\opencv.hpp>
+#include <conio.h>
+
 
 using namespace std;
 using namespace cv;
@@ -124,10 +126,8 @@ void Game::runMap()
 {
     int pressedKey;
     src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
-
-    Player.draw(map, charPosX, charPosY); //RYSOWANIE POSTACI
-    imshow(windowName, map);
-                                        //ODCZYT KLAWIATURY
+    
+    //ODCZYT KLAWIATURY
      pressedKey = waitKey(10);
 
     if (pressedKey == 'w') {
@@ -147,10 +147,8 @@ void Game::runMap()
     }
   
   //KONIEC ODCZYTU Z KLAWIATURY
-  
-    cout << "pozycja postaci:" << charPosX << ", " << charPosY << endl;
 
-    for (int i = 0; i < 50; i++)
+    for (int i = 0; i < 50; i++) //RYSOWANIE ENTITIES
     {
         if (entity[i].exists == true)
             entity[i].drawSelf(map);
@@ -164,6 +162,8 @@ void Game::runMap()
         }
     }
 
+    Player.draw(map, charPosX, charPosY); //RYSOWANIE POSTACI
+    cout << "pozycja postaci:" << charPosX << ", " << charPosY << endl;
 
     imshow(windowName, map);
     mapPosition += mapSpeed;
@@ -180,7 +180,6 @@ void Game::runMap()
         mapMilestone -= 1000;
         cout << "\nMAP SPEED +1 = " << mapSpeed;
     }
-    Sleep(10);
 }
 
 string Game::pauseGame()

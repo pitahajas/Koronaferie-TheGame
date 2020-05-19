@@ -151,12 +151,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CharacterChoiceWindow.cpp" />
+    <ClCompile Include="Entities.cpp" />
     <ClCompile Include="Koronaferie.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Character.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CharacterChoiceWindow.h" />
+    <ClInclude Include="Entities.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Character.h" />
   </ItemGroup>

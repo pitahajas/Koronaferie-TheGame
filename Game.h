@@ -43,7 +43,6 @@ private:
 	int charPosX = 500;
 	int charPosY = 100;
 
-	string windowName;
 	Mat src;
 
 	void configRead();

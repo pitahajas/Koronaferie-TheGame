@@ -10,9 +10,7 @@ void Character::draw() {}
 
 Mat Character::draw(Mat mapinput, int posX, int posY) {
 
-	//KRYSTIAN BANAN
 
-	if (characterSkin == 1) { 
 		Point czupryna[1][14];
 
 		czupryna[0][0] = Point(posX, 1000 - posY + 70);
@@ -40,9 +38,6 @@ Mat Character::draw(Mat mapinput, int posX, int posY) {
 		line(mapinput, Point(posX - 35, 950 - posY), Point(posX - 45, 1000 - posY), Scalar(255, 0, 0), 2);
 		fillPoly(mapinput, ppt, npt, 1, Scalar(0, 255, 255),LINE_8);
 
-		
-
-	}
 
     return mapinput;
 }
