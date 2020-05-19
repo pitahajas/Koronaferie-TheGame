@@ -11,9 +11,14 @@ class Character
 public:
 
 	string characterName;
+	int characterSkin;
+	int posX;
+	int posY;
+
+	void draw();
+	Mat draw(Mat mapinput, int posX, int posY);
 
 private:
 
-	int characterSkin;
 
 };
