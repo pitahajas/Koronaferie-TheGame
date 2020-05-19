@@ -19,6 +19,7 @@ int main()
     Koronaferie.initializeMap();
 
     int randomizer;
+    int pressedKey;
 
     while (true)
     {
@@ -44,12 +45,19 @@ int main()
 
         }
 
-       if (waitKey(1) == 32) //Pressing space
+        pressedKey = waitKey(1);
+
+        if (pressedKey == 32) //Pressing space
 
         {
             if (Koronaferie.pauseGame() == "Escape")
                 return 0;
-       }
+        }
+        else if (pressedKey == 'w' || pressedKey == 'a' || pressedKey == 's' || pressedKey == 'd')
+        {
+            cout << "PressedKey: " << pressedKey;
+            Koronaferie.pressedKey = pressedKey;
+        }
     }
 
 

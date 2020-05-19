@@ -8,7 +8,7 @@ using namespace cv;
 
 void Character::draw() {}
 
-Mat Character::draw(Mat mapinput, int posX, int posY) {
+void Character::draw(Mat mapinput, int posX, int posY) {
 
 
 		Point czupryna[1][14];
@@ -39,5 +39,5 @@ Mat Character::draw(Mat mapinput, int posX, int posY) {
 		fillPoly(mapinput, ppt, npt, 1, Scalar(0, 255, 255),LINE_8);
 
 
-    return mapinput;
+    return;
 }

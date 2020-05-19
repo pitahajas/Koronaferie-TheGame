@@ -36,12 +36,13 @@ public:
 	int mapSpeed;
 	int mapPosition;
 	int mapMilestone;
+	int pressedKey;
 
 
 private:
 
-	int charPosX = 500;
-	int charPosY = 100;
+	int charPosX;
+	int charPosY;
 
 	Mat src;
 

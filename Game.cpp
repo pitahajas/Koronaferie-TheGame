@@ -118,34 +118,29 @@ void Game::initializeMap()
     mapPosition = 0;
     mapMilestone = 0; 
     score = 0;
+    pressedKey = 0;
+    charPosX = 500;
+    charPosY = 100;
     //^ Initial variable values, used in Game::runMap()
     waitKey(1);
 }
 
 void Game::runMap()
 {
-    int pressedKey;
     src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
     
+    Player.draw(map, charPosX, charPosY); //RYSOWANIE POSTACI
     //ODCZYT KLAWIATURY
-     pressedKey = waitKey(10);
-
-    if (pressedKey == 'w') {
-        charPosY += 10;
-    }
-    
-    if (pressedKey == 's') {
-        charPosY -= 10;
-    }
-
-    if (pressedKey == 'd') {
-        charPosX += 10;
-    }
-
-    if (pressedKey == 'a') {
-        charPosX -= 10;
-    }
-  
+    //pressedKey = waitKey(1);
+        if (pressedKey == 'w' && charPosY <=990) {
+            charPosY += 6;
+        } else if (pressedKey == 's' && charPosY >=10) {
+            charPosY -= 10;
+        } else if (pressedKey == 'd' && charPosX <=990) {
+            charPosX += 15;
+        } else if (pressedKey == 'a' && charPosX >=10) {
+            charPosX -= 15;
+        }
   //KONIEC ODCZYTU Z KLAWIATURY
 
     for (int i = 0; i < 50; i++) //RYSOWANIE ENTITIES
@@ -162,8 +157,8 @@ void Game::runMap()
         }
     }
 
-    Player.draw(map, charPosX, charPosY); //RYSOWANIE POSTACI
-    cout << "pozycja postaci:" << charPosX << ", " << charPosY << endl;
+    cout << "\npozycja postaci:" << charPosX << ", " << charPosY << endl;
+ 
 
     imshow(windowName, map);
     mapPosition += mapSpeed;
@@ -180,6 +175,7 @@ void Game::runMap()
         mapMilestone -= 1000;
         cout << "\nMAP SPEED +1 = " << mapSpeed;
     }
+    Sleep(10);
 }
 
 string Game::pauseGame()

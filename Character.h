@@ -16,7 +16,7 @@ public:
 	int posY;
 
 	void draw();
-	Mat draw(Mat mapinput, int posX, int posY);
+	void draw(Mat mapinput, int posX, int posY);
 
 private:
 
