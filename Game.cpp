@@ -2,13 +2,11 @@
 #include "Character.h"
 #include "CharacterChoiceWindow.h"
 
-
 #include<iostream>
 #include<fstream>
 #include <sstream> 
 #include<string>
 #include <windows.h>
-#include<filesystem>
 #include <time.h>
 #include<opencv2\opencv.hpp>
 
@@ -42,7 +40,7 @@ void Game::configRead()
         stringstream width(line);
         width >> resolutionWidth;
         cout << "DEBUG INFO: Ustawiona w pliku Config.txt szerokosc okna wynosi:" << resolutionWidth << "px" << endl;
-        cout << "DEBUG INFO: Poprawnie odczytano rozdzielczość okna z plikwdu" << endl;
+        cout << "DEBUG INFO: Poprawnie odczytano rozdzielczość okna z pliku" << endl;
     }
     else
     {
@@ -110,7 +108,7 @@ void Game::initializeMap()
 {
     src = Mat(11000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
     src = imread("Map.jpg", IMREAD_COLOR); //Storing the full map
-    map = src(Range(10000, 11000), Range(0, 1000)); //Extracting Initial Region of Interest for the window and storing it in the matrix
+    src(Range(10000, 11000), Range(0, 1000)).copyTo(map); //Extracting Initial Region of Interest for the window and storing it in the matrix
     imshow(windowName, map);
     cout << "\nZaladowano mape.";
     mapSpeed = 6;  
@@ -118,17 +116,35 @@ void Game::initializeMap()
     mapMilestone = 0; 
     score = 0;
     //^ Initial variable values, used in Game::runMap()
+
     waitKey();
 }
 
 void Game::runMap()
 {
-    map = src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000));
+    src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
+
+    for (int i = 0; i < 50; i++)
+    {
+        if (entity[i].exists == true)
+            entity[i].drawSelf(map);
+
+        if (entity[i].progress < 1050)
+            entity[i].progress += mapSpeed;
+        else
+        {
+            entity[i].exists = false;
+            entity[i].progress = 0;
+        }
+    }
+
+
     imshow(windowName, map);
     mapPosition += mapSpeed;
     if(mapPosition >=10000)
         mapPosition -= 10000;
-    cout << "\nPozycja mapy: " << mapPosition;
+
+    //cout << "\nPozycja mapy: " << mapPosition;
     score += (double)mapSpeed/100;
     cout << "\nWYNIK: " << (int)score;
     mapMilestone += mapSpeed; //Tracking milestones every 1000 pixels for speed incrementation.
