@@ -1,14 +1,12 @@
-﻿#include "Game.h"
+#include "Game.h"
 #include "Character.h"
 #include "CharacterChoiceWindow.h"
-
 
 #include<iostream>
 #include<fstream>
 #include <sstream> 
 #include<string>
 #include <windows.h>
-#include<filesystem>
 #include <time.h>
 #include<opencv2\opencv.hpp>
 
@@ -20,7 +18,6 @@ Character Player;
 void Game::initialize()   //Initialization of main game window.
 {
         configRead(); //Setting up and reading window configuration from text file.
-        srand(time(NULL));
 }
 
 void Game::configRead()
@@ -43,7 +40,7 @@ void Game::configRead()
         stringstream width(line);
         width >> resolutionWidth;
         cout << "DEBUG INFO: Ustawiona w pliku Config.txt szerokosc okna wynosi:" << resolutionWidth << "px" << endl;
-        cout << "DEBUG INFO: Poprawnie odczytano rozdzielczość okna z plikwdu" << endl;
+        cout << "DEBUG INFO: Poprawnie odczytano rozdzielczość okna z pliku" << endl;
     }
     else
     {
@@ -99,8 +96,8 @@ void Game::chooseCharacter() {
             ChoiceWindow.textboxInitialize(windowName);
             ChoiceWindow.textboxUpdate(windowName);
 
+            Character Player;
             Player.characterName = ChoiceWindow.chosenCharacterName;
-            Player.characterSkin = ChoiceWindow.chosenCharacter;
             cout << "Wybrano postac: " << ChoiceWindow.chosenCharacter << ", jej nazwa to: " << Player.characterName;
             return;
         }
@@ -126,12 +123,10 @@ void Game::initializeMap()
 void Game::runMap()
 {
     int pressedKey;
-
     src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
 
     Player.draw(map, charPosX, charPosY); //RYSOWANIE POSTACI
     imshow(windowName, map);
-
                                         //ODCZYT KLAWIATURY
      pressedKey = waitKey(10);
 
@@ -143,7 +138,6 @@ void Game::runMap()
         charPosY -= 10;
     }
 
-
     if (pressedKey == 'd') {
         charPosX += 10;
     }
@@ -151,22 +145,42 @@ void Game::runMap()
     if (pressedKey == 'a') {
         charPosX -= 10;
     }
-
+  
+  //KONIEC ODCZYTU Z KLAWIATURY
+  
     cout << "pozycja postaci:" << charPosX << ", " << charPosY << endl;
 
+    for (int i = 0; i < 50; i++)
+    {
+        if (entity[i].exists == true)
+            entity[i].drawSelf(map);
+
+        if (entity[i].progress < 1050)
+            entity[i].progress += mapSpeed;
+        else
+        {
+            entity[i].exists = false;
+            entity[i].progress = 0;
+        }
+    }
+
+
+    imshow(windowName, map);
     mapPosition += mapSpeed;
     if(mapPosition >=10000)
-        mapPosition = 0;
-    //cout << "\nPozycja mapy: " << mapPosition; //w razie problemów uncomment - generuje dużo niepotrzebnych napisów w oknie terminala :)
+        mapPosition -= 10000;
+
+    //cout << "\nPozycja mapy: " << mapPosition;
     score += (double)mapSpeed/100;
-    //cout << "\nWYNIK: " << (int)score;
+    cout << "\nWYNIK: " << (int)score;
     mapMilestone += mapSpeed; //Tracking milestones every 1000 pixels for speed incrementation.
     if (mapMilestone >= 1000)
     {
         mapSpeed += 1;
         mapMilestone -= 1000;
-      // cout << "\nMAP SPEED +1 = " << mapSpeed;
+        cout << "\nMAP SPEED +1 = " << mapSpeed;
     }
+    Sleep(10);
 }
 
 string Game::pauseGame()
@@ -183,7 +197,3 @@ string Game::pauseGame()
             return "Space";
     }
 }
-
-
-
-

@@ -1,4 +1,6 @@
 
+#include "Entities.h"
+
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include<string>
@@ -23,21 +25,26 @@ public:
 	void chooseCharacter();
 	void initializeMap();
 	void runMap();
+	
 	string pauseGame();
 
 
-private:
-
+	string windowName;
+	Mat map;
+	Entities entity[50];
 
 	int mapSpeed;
 	int mapPosition;
 	int mapMilestone;
+
+
+private:
+
 	int charPosX = 500;
 	int charPosY = 100;
 
 	string windowName;
 	Mat src;
-	Mat map;
 
 	void configRead();
 	void characterChangePosition();
