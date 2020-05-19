@@ -1,3 +1,4 @@
+
 #include "Entities.h"
 
 #include<opencv2/opencv.hpp>
@@ -15,6 +16,7 @@ class Game
 public:
 	int resolutionHeigth;
 	int resolutionWidth;
+
 
 	double score;
 
@@ -35,10 +37,18 @@ public:
 	int mapPosition;
 	int mapMilestone;
 
+
 private:
+
+	int charPosX = 500;
+	int charPosY = 100;
+
+	string windowName;
 	Mat src;
 
 	void configRead();
+	void characterChangePosition();
+
 
 };
 

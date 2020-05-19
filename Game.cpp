@@ -1,4 +1,4 @@
-﻿#include "Game.h"
+#include "Game.h"
 #include "Character.h"
 #include "CharacterChoiceWindow.h"
 
@@ -13,7 +13,7 @@
 using namespace std;
 using namespace cv;
 
-
+Character Player;
 
 void Game::initialize()   //Initialization of main game window.
 {
@@ -109,6 +109,7 @@ void Game::initializeMap()
     src = Mat(11000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
     src = imread("Map.jpg", IMREAD_COLOR); //Storing the full map
     src(Range(10000, 11000), Range(0, 1000)).copyTo(map); //Extracting Initial Region of Interest for the window and storing it in the matrix
+    Player.draw(map, charPosX, charPosY);
     imshow(windowName, map);
     cout << "\nZaladowano mape.";
     mapSpeed = 6;  
@@ -116,13 +117,38 @@ void Game::initializeMap()
     mapMilestone = 0; 
     score = 0;
     //^ Initial variable values, used in Game::runMap()
-
-    waitKey();
+    waitKey(1);
 }
 
 void Game::runMap()
 {
+    int pressedKey;
     src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
+
+    Player.draw(map, charPosX, charPosY); //RYSOWANIE POSTACI
+    imshow(windowName, map);
+                                        //ODCZYT KLAWIATURY
+     pressedKey = waitKey(10);
+
+    if (pressedKey == 'w') {
+        charPosY += 10;
+    }
+    
+    if (pressedKey == 's') {
+        charPosY -= 10;
+    }
+
+    if (pressedKey == 'd') {
+        charPosX += 10;
+    }
+
+    if (pressedKey == 'a') {
+        charPosX -= 10;
+    }
+  
+  //KONIEC ODCZYTU Z KLAWIATURY
+  
+    cout << "pozycja postaci:" << charPosX << ", " << charPosY << endl;
 
     for (int i = 0; i < 50; i++)
     {

@@ -43,11 +43,13 @@ int main()
             }
 
         }
-        if (waitKey(1) == 32) //Pressing space
+
+       if (waitKey(1) == 32) //Pressing space
+
         {
             if (Koronaferie.pauseGame() == "Escape")
                 return 0;
-        }
+       }
     }
 
 
