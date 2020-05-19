@@ -32,7 +32,7 @@ void Game::configRead()
     {
 
         getline(configReader, line, '\n'); //Getting resolution height from Config.txt and converting it into integer.
-        getline(configReader, line, '\n')aaa;
+        getline(configReader, line, '\n');
         stringstream height(line);
         height >> resolutionHeigth;
         cout << "DEBUG INFO: Ustawiona w pliku Config.txt wysokosc okna wynosi:" << resolutionHeigth << "px" << endl;
@@ -101,9 +101,7 @@ void Game::chooseCharacter() {
             Character Player;
             Player.characterName = ChoiceWindow.chosenCharacterName;
             cout << "Wybrano postac: " << ChoiceWindow.chosenCharacter << ", jej nazwa to: " << Player.characterName;
-
             return;
-
         }
     }
 }
@@ -118,6 +116,7 @@ void Game::initializeMap()
     mapSpeed = 6;  
     mapPosition = 0;
     mapMilestone = 0; 
+    score = 0;
     //^ Initial variable values, used in Game::runMap()
     waitKey();
 }
@@ -130,6 +129,8 @@ void Game::runMap()
     if(mapPosition >=10000)
         mapPosition -= 10000;
     cout << "\nPozycja mapy: " << mapPosition;
+    score += (double)mapSpeed/100;
+    cout << "\nWYNIK: " << (int)score;
     mapMilestone += mapSpeed; //Tracking milestones every 1000 pixels for speed incrementation.
     if (mapMilestone >= 1000)
     {
@@ -142,8 +143,6 @@ void Game::runMap()
 
 string Game::pauseGame()
 {
-   // Mat pauza = Mat(400, 400, CV_32FC3);
-   // pauza = imread("Menu_pauzy.jpg", IMREAD_COLOR);
     map = imread("Menu_pauzy.jpg", IMREAD_COLOR);
     imshow(windowName, map);
     char input;

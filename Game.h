@@ -14,6 +14,8 @@ public:
 	int resolutionHeigth;
 	int resolutionWidth;
 
+	double score;
+
 	void initialize();
 	void showWelcomeScreen();
 	void chooseCharacter();
