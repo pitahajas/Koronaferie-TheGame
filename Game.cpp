@@ -32,7 +32,7 @@ void Game::configRead()
     {
 
         getline(configReader, line, '\n'); //Getting resolution height from Config.txt and converting it into integer.
-        getline(configReader, line, '\n');
+        getline(configReader, line, '\n')aaa;
         stringstream height(line);
         height >> resolutionHeigth;
         cout << "DEBUG INFO: Ustawiona w pliku Config.txt wysokosc okna wynosi:" << resolutionHeigth << "px" << endl;
@@ -42,7 +42,7 @@ void Game::configRead()
         stringstream width(line);
         width >> resolutionWidth;
         cout << "DEBUG INFO: Ustawiona w pliku Config.txt szerokosc okna wynosi:" << resolutionWidth << "px" << endl;
-        cout << "DEBUG INFO: Poprawnie odczytano rozdzielczość okna z pliku" << endl;
+        cout << "DEBUG INFO: Poprawnie odczytano rozdzielczość okna z plikwdu" << endl;
     }
     else
     {
