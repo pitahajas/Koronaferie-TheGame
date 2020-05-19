@@ -20,12 +20,12 @@ int main()
     {
         Koronaferie.runMap();
 
-        if (waitKey(1) == 32) //Pressing space
+       if (waitKey(1) == 32) //Pressing space
         {
             string input = Koronaferie.pauseGame();
             if (input == "Escape")
                 return 0;
-        }
+       }
     }
 
 

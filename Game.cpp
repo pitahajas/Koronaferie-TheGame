@@ -15,11 +15,12 @@
 using namespace std;
 using namespace cv;
 
-
+Character Player;
 
 void Game::initialize()   //Initialization of main game window.
 {
         configRead(); //Setting up and reading window configuration from text file.
+        srand(time(NULL));
 }
 
 void Game::configRead()
@@ -98,8 +99,8 @@ void Game::chooseCharacter() {
             ChoiceWindow.textboxInitialize(windowName);
             ChoiceWindow.textboxUpdate(windowName);
 
-            Character Player;
             Player.characterName = ChoiceWindow.chosenCharacterName;
+            Player.characterSkin = ChoiceWindow.chosenCharacter;
             cout << "Wybrano postac: " << ChoiceWindow.chosenCharacter << ", jej nazwa to: " << Player.characterName;
             return;
         }
@@ -110,7 +111,8 @@ void Game::initializeMap()
 {
     src = Mat(11000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
     src = imread("Map.jpg", IMREAD_COLOR); //Storing the full map
-    map = src(Range(10000, 11000), Range(0, 1000)); //Extracting Initial Region of Interest for the window and storing it in the matrix
+    src(Range(10000, 11000), Range(0, 1000)).copyTo(map); //Extracting Initial Region of Interest for the window and storing it in the matrix
+    Player.draw(map, charPosX, charPosY);
     imshow(windowName, map);
     cout << "\nZaladowano mape.";
     mapSpeed = 6;  
@@ -118,27 +120,53 @@ void Game::initializeMap()
     mapMilestone = 0; 
     score = 0;
     //^ Initial variable values, used in Game::runMap()
-    waitKey();
+    waitKey(1);
 }
 
 void Game::runMap()
 {
-    map = src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000));
+    int pressedKey;
+
+    src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
+
+    Player.draw(map, charPosX, charPosY); //RYSOWANIE POSTACI
     imshow(windowName, map);
+
+                                        //ODCZYT KLAWIATURY
+     pressedKey = waitKey(10);
+
+    if (pressedKey == 'w') {
+        charPosY += 10;
+    }
+    
+    if (pressedKey == 's') {
+        charPosY -= 10;
+    }
+
+
+    if (pressedKey == 'd') {
+        charPosX += 10;
+    }
+
+    if (pressedKey == 'a') {
+        charPosX -= 10;
+    }
+
+    cout << "pozycja postaci:" << charPosX << ", " << charPosY << endl;
+
     mapPosition += mapSpeed;
     if(mapPosition >=10000)
-        mapPosition -= 10000;
-    cout << "\nPozycja mapy: " << mapPosition;
+        mapPosition = 0;
+    //cout << "\nPozycja mapy: " << mapPosition; //w razie problemów uncomment - generuje dużo niepotrzebnych napisów w oknie terminala :)
     score += (double)mapSpeed/100;
-    cout << "\nWYNIK: " << (int)score;
+    //cout << "\nWYNIK: " << (int)score;
     mapMilestone += mapSpeed; //Tracking milestones every 1000 pixels for speed incrementation.
     if (mapMilestone >= 1000)
     {
         mapSpeed += 1;
         mapMilestone -= 1000;
-        cout << "\nMAP SPEED +1 = " << mapSpeed;
+      // cout << "\nMAP SPEED +1 = " << mapSpeed;
     }
-    Sleep(10);
 }
 
 string Game::pauseGame()
@@ -155,3 +183,7 @@ string Game::pauseGame()
             return "Space";
     }
 }
+
+
+
+
