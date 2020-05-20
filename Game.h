@@ -1,4 +1,4 @@
-
+#include "Character.h"
 #include "Entities.h"
 
 #include<opencv2/opencv.hpp>
@@ -16,39 +16,37 @@ class Game
 public:
 	int resolutionHeigth;
 	int resolutionWidth;
-
-
-	double score;
-
-	void initialize();
-	void showWelcomeScreen();
-	void chooseCharacter();
-	void initializeMap();
-	void runMap();
-	
-	string pauseGame();
-
-
-	string windowName;
-	Mat map;
-	Entities entity[50];
-
 	int mapSpeed;
 	int mapPosition;
 	int mapMilestone;
 	int pressedKey;
 
+	double score;
+	double highScore;
+
+	void initialize();
+	void showWelcomeScreen();
+	void chooseCharacter();
+	void initializeGame();
+	void runMap();
+	void checkCollisions();
+	void checkCollisions(int i);
+
+	string endGame();
+	string pauseGame();
+
+	string windowName;
+	Mat map;
+	Entities entity[50];
+	Character Player;
+
+
 
 private:
-
-	int charPosX;
-	int charPosY;
 
 	Mat src;
 
 	void configRead();
-	void characterChangePosition();
-
 
 };
 

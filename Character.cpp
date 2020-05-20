@@ -1,4 +1,4 @@
-#include "Character.h"
+#include "Game.h"
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include<string>
@@ -6,9 +6,20 @@
 using namespace std;
 using namespace cv;
 
+Character::Character()
+{
+	posX = 500;
+	posY = 100;
+	maxHP = 10;
+	currentHP = 10;
+
+	isInvincible = false;
+	invincibleTimer = 0;
+}
+
 void Character::draw() {}
 
-void Character::draw(Mat mapinput, int posX, int posY) {
+void Character::draw(Mat mapinput) {
 
 
 		Point czupryna[1][14];
