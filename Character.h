@@ -9,14 +9,20 @@ using namespace cv;
 class Character
 {
 public:
+	Character();
 
 	string characterName;
 	int characterSkin;
 	int posX;
 	int posY;
+	int maxHP;
+	int currentHP;
+
+	bool isInvincible;
+	int invincibleTimer;
 
 	void draw();
-	void draw(Mat mapinput, int posX, int posY);
+	void draw(Mat mapinput);
 
 private:
 

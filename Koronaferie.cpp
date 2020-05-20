@@ -13,10 +13,10 @@ int main()
 
     Koronaferie.initialize(); //Initialization of the main game window
     Koronaferie.showWelcomeScreen(); //Displaying welcome animation loop
+    Koronaferie.highScore = 0;
+    Launch:
     Koronaferie.chooseCharacter();
-
-    Entities entity;
-    Koronaferie.initializeMap();
+    Koronaferie.initializeGame();
 
     int randomizer;
     int pressedKey;
@@ -31,11 +31,11 @@ int main()
                 randomizer = rand() % 100;
                 if(randomizer <30)
                     Koronaferie.entity[i].spawnEntity("block");
-                else if(randomizer >=30 && randomizer <55)
+                else if(randomizer >=30 && randomizer <45)
                     Koronaferie.entity[i].spawnEntity("koronawirus");
-                else if (randomizer >= 55 && randomizer < 70)
+                else if (randomizer >= 45 && randomizer < 65)
                     Koronaferie.entity[i].spawnEntity("accel");
-                else if (randomizer >= 70 && randomizer < 85)
+                else if (randomizer >= 65 && randomizer < 85)
                     Koronaferie.entity[i].spawnEntity("brake");
                 else if (randomizer >= 85 && randomizer < 95)
                     Koronaferie.entity[i].spawnEntity("pill");
@@ -43,6 +43,8 @@ int main()
                     Koronaferie.entity[i].spawnEntity("mask");
             }
 
+
+            Koronaferie.checkCollisions(i);
         }
 
         pressedKey = waitKey(1);
@@ -55,8 +57,15 @@ int main()
         }
         else if (pressedKey == 'w' || pressedKey == 'a' || pressedKey == 's' || pressedKey == 'd')
         {
-            cout << "PressedKey: " << pressedKey;
+            cout << "\nPressedKey: " << pressedKey;
             Koronaferie.pressedKey = pressedKey;
+        }
+        if (Koronaferie.Player.currentHP <= 0)
+        {
+            if(Koronaferie.endGame()=="escape")
+                return 0;
+            else
+                goto Launch;
         }
     }
 
