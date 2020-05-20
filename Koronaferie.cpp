@@ -28,7 +28,7 @@ int main()
         {
             if (rand() % 1000 < 2 && Koronaferie.entity[i].exists == false)
             {
-                randomizer = rand() % 100;
+                randomizer = rand() % 200;
                 if(randomizer <30)
                     Koronaferie.entity[i].spawnEntity("block");
                 else if(randomizer >=30 && randomizer <55)
