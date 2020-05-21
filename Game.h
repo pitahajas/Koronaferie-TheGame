@@ -23,6 +23,7 @@ public:
 
 	double score;
 	double highScore;
+	string highScoreHolder;
 
 	void initialize();
 	void showWelcomeScreen();

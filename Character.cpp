@@ -48,7 +48,8 @@ void Character::draw(Mat mapinput) {
 		line(mapinput, Point(posX + 35, 950 - posY), Point(posX + 45, 1000 - posY), Scalar(255, 0, 0), 2);
 		line(mapinput, Point(posX - 35, 950 - posY), Point(posX - 45, 1000 - posY), Scalar(255, 0, 0), 2);
 		fillPoly(mapinput, ppt, npt, 1, Scalar(0, 255, 255),LINE_8);
-
+		rectangle(mapinput, Point(posX - 50, 900 - posY), Point(posX - 50 + 10*maxHP, 910-posY), Scalar(0, 0, 255), FILLED);
+		rectangle(mapinput, Point(posX - 50, 900 - posY), Point(posX - 50 + 10*currentHP, 910 - posY), Scalar(128, 255, 0), FILLED);
 
     return;
 }

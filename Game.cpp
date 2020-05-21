@@ -247,12 +247,16 @@ void Game::checkCollisions(int i)
 string Game::endGame()
 {
     if (highScore < score)
+    {
         highScore = score;
+        highScoreHolder = Player.characterName;
+    }
     rectangle(map, Point(200, 200), Point(800, 800), Scalar(0, 0, 128), FILLED, 0);
     putText(map, "KONIEC GRY", Point(220, 320), FONT_HERSHEY_COMPLEX, 2.7, Scalar(255, 255, 255), 1, 8, false);
-    putText(map, "Imie postaci: " + Player.characterName, Point(300, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
-    putText(map, "Twoj wynik: " + to_string((int)score), Point(300, 500), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
-    putText(map, "Najlepszy wynik: " + to_string((int)highScore), Point(300, 600), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
+    putText(map, "Imie postaci: " + Player.characterName, Point(220, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
+    putText(map, "Twoj wynik: " + to_string((int)score), Point(220, 470), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
+    putText(map, "Najlepszy wynik: " + to_string((int)highScore), Point(220, 540), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
+    putText(map, "Wlasciciel rekordu: " + highScoreHolder, Point(220, 610), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
     putText(map, "Escape - Wyjscie  Spacja - restart.", Point(250, 750), FONT_HERSHEY_SIMPLEX, 0.8, Scalar(255, 255, 255), 1, 8, false);
     imshow(windowName, map);
     while (true)
