@@ -26,7 +26,5 @@ public:
 	string identifier;
 
 private:
-	int positionX;
-	int positionY;
 
 };

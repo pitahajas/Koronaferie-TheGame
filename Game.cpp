@@ -107,7 +107,12 @@ void Game::initializeGame()
     src = Mat(11000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
     src = imread("Map.jpg", IMREAD_COLOR); //Storing the full map
     src(Range(10000, 11000), Range(0, 1000)).copyTo(map); //Extracting Initial Region of Interest for the window and storing it in the matrix
+    Player.posX = 500;
+    Player.posY = 100;
     Player.draw(map);
+    rectangle(map, Point(200, 450), Point(800, 550), Scalar(0, 0, 128), FILLED);
+    putText(map, "A,W,D,S - sterowanie postacia.", Point(220, 480), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
+    putText(map, "Wcisnij dowolny przycisk, by rozpoczac rozgrywke.", Point(220, 520), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
     imshow(windowName, map);
     cout << "\nZaladowano mape.";
     mapSpeed = 6;  
@@ -124,7 +129,8 @@ void Game::initializeGame()
         entity[i].exists = false;
         entity[i].positionY = -50;
     }
-    waitKey(1);
+    
+    waitKey();
 }
 
 void Game::runMap()
@@ -158,7 +164,9 @@ void Game::runMap()
         }
     }
 
-   // cout << "\npozycja postaci:" << Player.posX << ", " << Player.posY << endl;
+    rectangle(map, Point(900, 0), Point(1000, 40), Scalar(0,0,0), FILLED);
+    rectangle(map, Point(905, 5), Point(995, 35), Scalar(255, 255, 255), FILLED);
+    putText(map, to_string(score), Point(910, 30), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 0));
  
 
     imshow(windowName, map);
@@ -198,16 +206,11 @@ void Game::checkCollisions() {}
 
 void Game::checkCollisions(int i)
 {
-    if (Player.invincibleTimer > 0)
-        Player.invincibleTimer -= 1;
-    else
-        Player.isInvincible = false;
 
-    if(abs(Player.posX-entity[i].positionX) <= 100 && abs(1000-Player.posY-(entity[i].positionY+entity[i].progress)) <= 100)
+    if(abs(Player.posX-entity[i].positionX) <= 100 && abs(1000-Player.posY-(entity[i].positionY+entity[i].progress)) <= 100 && entity[i].exists==true)
     {
         cout << "\nKOLIZJA na: " << mapPosition << " z: " << entity[i].identifier;
         entity[i].exists = false;
-        entity[i].positionX = 2000;
         if (entity[i].identifier == "block" && Player.isInvincible == false)
         {
             Player.currentHP -= 1;
@@ -242,7 +245,7 @@ void Game::checkCollisions(int i)
         if (entity[i].identifier == "mask")
         {
             Player.isInvincible = true;
-            Player.invincibleTimer = 3000;
+            Player.invincibleTimer = 200;
             cout << "\ninvincibleTimer: " << Player.invincibleTimer;
         }
     
@@ -252,12 +255,16 @@ void Game::checkCollisions(int i)
 string Game::endGame()
 {
     if (highScore < score)
+    {
         highScore = score;
+        highScoreHolder = Player.characterName;
+    }
     rectangle(map, Point(200, 200), Point(800, 800), Scalar(0, 0, 128), FILLED, 0);
     putText(map, "KONIEC GRY", Point(220, 320), FONT_HERSHEY_COMPLEX, 2.7, Scalar(255, 255, 255), 1, 8, false);
-    putText(map, "Imie postaci: " + Player.characterName, Point(300, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
-    putText(map, "Twoj wynik: " + to_string((int)score), Point(300, 500), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
-    putText(map, "Najlepszy wynik: " + to_string((int)highScore), Point(300, 600), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
+    putText(map, "Imie postaci: " + Player.characterName, Point(220, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
+    putText(map, "Twoj wynik: " + to_string((int)score), Point(220, 470), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
+    putText(map, "Najlepszy wynik: " + to_string((int)highScore), Point(220, 540), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
+    putText(map, "Wlasciciel rekordu: " + highScoreHolder, Point(220, 610), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
     putText(map, "Escape - Wyjscie  Spacja - restart.", Point(250, 750), FONT_HERSHEY_SIMPLEX, 0.8, Scalar(255, 255, 255), 1, 8, false);
     imshow(windowName, map);
     while (true)

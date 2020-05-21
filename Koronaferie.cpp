@@ -26,9 +26,9 @@ int main()
         Koronaferie.runMap();
         for (int i = 0; i < 50; i++)
         {
-            if (rand() % 1000 < 2 && Koronaferie.entity[i].exists == false)
+            if (rand() % 1500 < 2 && Koronaferie.entity[i].exists == false)
             {
-                randomizer = rand() % 200;
+                randomizer = rand() % 100;
                 if(randomizer <30)
                     Koronaferie.entity[i].spawnEntity("block");
                 else if(randomizer >=30 && randomizer <45)
@@ -46,6 +46,12 @@ int main()
 
             Koronaferie.checkCollisions(i);
         }
+
+        if (Koronaferie.Player.invincibleTimer > 0)
+            Koronaferie.Player.invincibleTimer -= 1;
+        else
+            Koronaferie.Player.isInvincible = false;
+
 
         pressedKey = waitKey(1);
 
