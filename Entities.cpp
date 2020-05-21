@@ -55,7 +55,7 @@ void Entities::drawSelf()
 void Entities::drawSelf(Mat map)
 {
 	if (identifier == "block") {
-		rectangle(map, Point(positionX-50, positionY + progress - 60), Point(positionX+50, positionY + progress), Scalar(200,200,200), FILLED);
+		rectangle(map, Point(positionX - 50, positionY + progress - 60), Point(positionX + 50, positionY + progress), Scalar(200, 200, 200), FILLED);
 		rectangle(map, Point(positionX - 50, positionY + progress - 60), Point(positionX + 50, positionY + progress-40), Scalar(150, 150, 150), FILLED);
 		rectangle(map, Point(positionX - 50, positionY + progress - 60), Point(positionX + 50, positionY + progress), Scalar(50, 50, 50), 2);
 		rectangle(map, Point(positionX - 50, positionY + progress - 60), Point(positionX + 50, positionY + progress - 40), Scalar(50, 50, 50), 1);

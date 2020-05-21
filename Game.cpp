@@ -198,16 +198,11 @@ void Game::checkCollisions() {}
 
 void Game::checkCollisions(int i)
 {
-    if (Player.invincibleTimer > 0)
-        Player.invincibleTimer -= 1;
-    else
-        Player.isInvincible = false;
 
-    if(abs(Player.posX-entity[i].positionX) <= 100 && abs(1000-Player.posY-(entity[i].positionY+entity[i].progress)) <= 100)
+    if(abs(Player.posX-entity[i].positionX) <= 100 && abs(1000-Player.posY-(entity[i].positionY+entity[i].progress)) <= 100 && entity[i].exists==true)
     {
         cout << "\nKOLIZJA na: " << mapPosition << " z: " << entity[i].identifier;
         entity[i].exists = false;
-        entity[i].positionX = 2000;
         if (entity[i].identifier == "block" && Player.isInvincible == false)
         {
             Player.currentHP -= 1;
@@ -242,7 +237,7 @@ void Game::checkCollisions(int i)
         if (entity[i].identifier == "mask")
         {
             Player.isInvincible = true;
-            Player.invincibleTimer = 3000;
+            Player.invincibleTimer = 200;
             cout << "\ninvincibleTimer: " << Player.invincibleTimer;
         }
     
