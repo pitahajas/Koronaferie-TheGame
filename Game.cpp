@@ -115,9 +115,9 @@ void Game::initializeGame()
     putText(map, "Wcisnij dowolny przycisk, by rozpoczac rozgrywke.", Point(220, 520), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
     imshow(windowName, map);
     cout << "\nZaladowano mape.";
-    mapSpeed = 6;  
+    mapSpeed = 6;
     mapPosition = 0;
-    mapMilestone = 0; 
+    mapMilestone = 0;
     score = 0;
     //^ Initial variable values, used in Game::runMap()
     Player.currentHP = Player.maxHP;
@@ -129,27 +129,30 @@ void Game::initializeGame()
         entity[i].exists = false;
         entity[i].positionY = -50;
     }
-    
+
     waitKey();
 }
 
 void Game::runMap()
 {
     src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
-    
+
     Player.draw(map); //RYSOWANIE POSTACI
     //ODCZYT KLAWIATURY
     //pressedKey = waitKey(1);
-        if (pressedKey == 'w' && Player.posY <=990) {
-            Player.posY += 6;
-        } else if (pressedKey == 's' && Player.posY >=10) {
-            Player.posY -= 10;
-        } else if (pressedKey == 'd' && Player.posX <=990) {
-            Player.posX += 15;
-        } else if (pressedKey == 'a' && Player.posX >=10) {
-            Player.posX -= 15;
-        }
-  //KONIEC ODCZYTU Z KLAWIATURY
+    if (pressedKey == 'w' && Player.posY <= 990) {
+        Player.posY += 6;
+    }
+    else if (pressedKey == 's' && Player.posY >= 10) {
+        Player.posY -= 10;
+    }
+    else if (pressedKey == 'd' && Player.posX <= 990) {
+        Player.posX += 15;
+    }
+    else if (pressedKey == 'a' && Player.posX >= 10) {
+        Player.posX -= 15;
+    }
+    //KONIEC ODCZYTU Z KLAWIATURY
 
     for (int i = 0; i < 50; i++) //RYSOWANIE ENTITIES
     {
@@ -164,18 +167,18 @@ void Game::runMap()
         }
     }
 
-    rectangle(map, Point(900, 0), Point(1000, 40), Scalar(0,0,0), FILLED);
+    rectangle(map, Point(900, 0), Point(1000, 40), Scalar(0, 0, 0), FILLED);
     rectangle(map, Point(905, 5), Point(995, 35), Scalar(255, 255, 255), FILLED);
     putText(map, to_string(score), Point(910, 30), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 0));
- 
+
 
     imshow(windowName, map);
     mapPosition += mapSpeed;
-    if(mapPosition >=10000)
+    if (mapPosition >= 10000)
         mapPosition -= 10000;
 
     //cout << "\nPozycja mapy: " << mapPosition;
-    score += (double)mapSpeed/100;
+    score += (double)mapSpeed / 100;
     //cout << "\nWYNIK: " << (int)score;
     mapMilestone += mapSpeed; //Tracking milestones every 1000 pixels for speed incrementation.
     if (mapMilestone >= 1000)
@@ -207,7 +210,7 @@ void Game::checkCollisions() {}
 void Game::checkCollisions(int i)
 {
 
-    if(abs(Player.posX-entity[i].positionX) <= 100 && abs(1000-Player.posY-(entity[i].positionY+entity[i].progress)) <= 100 && entity[i].exists==true)
+    if (abs(Player.posX - entity[i].positionX) <= 100 && abs(1000 - Player.posY - (entity[i].positionY + entity[i].progress)) <= 100 && entity[i].exists == true)
     {
         cout << "\nKOLIZJA na: " << mapPosition << " z: " << entity[i].identifier;
         entity[i].exists = false;
@@ -215,40 +218,45 @@ void Game::checkCollisions(int i)
         {
             Player.currentHP -= 1;
             cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
-        } else
+        }
+        else
             cout << "\ninvincibleTimer: " << Player.invincibleTimer;
         if (entity[i].identifier == "koronawirus" && Player.isInvincible == false)
         {
             Player.currentHP -= 2;
             cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
-        } else
+        }
+        else
             cout << "\ninvincibleTimer: " << Player.invincibleTimer;
         if (entity[i].identifier == "accel")
         {
             mapSpeed += 2;
             cout << "\nmapSpeed: " << mapSpeed;
-        }else 
-        if (entity[i].identifier == "brake")
-        {
-            mapSpeed -= 2;
-            if (mapSpeed < 6)
-                mapSpeed = 6;
-            cout << "\nmapSpeed: " << mapSpeed;
-        } else
-        if (entity[i].identifier == "pill")
-        {
-            Player.currentHP += 3;
-            if (Player.currentHP > Player.maxHP)
-                Player.currentHP = Player.maxHP;
-            cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
-        } else
-        if (entity[i].identifier == "mask")
-        {
-            Player.isInvincible = true;
-            Player.invincibleTimer = 200;
-            cout << "\ninvincibleTimer: " << Player.invincibleTimer;
         }
-    
+        else
+            if (entity[i].identifier == "brake")
+            {
+                mapSpeed -= 2;
+                if (mapSpeed < 6)
+                    mapSpeed = 6;
+                cout << "\nmapSpeed: " << mapSpeed;
+            }
+            else
+                if (entity[i].identifier == "pill")
+                {
+                    Player.currentHP += 3;
+                    if (Player.currentHP > Player.maxHP)
+                        Player.currentHP = Player.maxHP;
+                    cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
+                }
+                else
+                    if (entity[i].identifier == "mask")
+                    {
+                        Player.isInvincible = true;
+                        Player.invincibleTimer = 200;
+                        cout << "\ninvincibleTimer: " << Player.invincibleTimer;
+                    }
+
     }
 }
 
@@ -275,5 +283,11 @@ string Game::endGame()
         else if (key == 27)
             return "escape";
     }
-    
+
 }
+
+
+
+
+
+
