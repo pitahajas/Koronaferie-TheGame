@@ -107,7 +107,12 @@ void Game::initializeGame()
     src = Mat(11000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
     src = imread("Map.jpg", IMREAD_COLOR); //Storing the full map
     src(Range(10000, 11000), Range(0, 1000)).copyTo(map); //Extracting Initial Region of Interest for the window and storing it in the matrix
+    Player.posX = 500;
+    Player.posY = 100;
     Player.draw(map);
+    rectangle(map, Point(200, 450), Point(800, 550), Scalar(0, 0, 128), FILLED);
+    putText(map, "A,W,D,S - sterowanie postacia.", Point(220, 480), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
+    putText(map, "Wcisnij dowolny przycisk, by rozpoczac rozgrywke.", Point(220, 520), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
     imshow(windowName, map);
     cout << "\nZaladowano mape.";
     mapSpeed = 6;  
@@ -124,7 +129,8 @@ void Game::initializeGame()
         entity[i].exists = false;
         entity[i].positionY = -50;
     }
-    waitKey(1);
+    
+    waitKey();
 }
 
 void Game::runMap()
