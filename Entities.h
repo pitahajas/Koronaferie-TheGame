@@ -19,14 +19,14 @@ public:
 	void drawSelf(Mat map);
 
 	int progress;
-	bool exists;
-
 	int positionX;
 	int positionY;
+	bool exists;
 
 	string identifier;
 
 private:
-
+	int positionX;
+	int positionY;
 
 };
