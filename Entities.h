@@ -21,10 +21,12 @@ public:
 	int progress;
 	bool exists;
 
+	int positionX;
+	int positionY;
+
 	string identifier;
 
 private:
-	int positionX;
-	int positionY;
+
 
 };
