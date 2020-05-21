@@ -158,7 +158,9 @@ void Game::runMap()
         }
     }
 
-   // cout << "\npozycja postaci:" << Player.posX << ", " << Player.posY << endl;
+    rectangle(map, Point(900, 0), Point(1000, 40), Scalar(0,0,0), FILLED);
+    rectangle(map, Point(905, 5), Point(995, 35), Scalar(255, 255, 255), FILLED);
+    putText(map, to_string(score), Point(910, 30), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 0));
  
 
     imshow(windowName, map);
