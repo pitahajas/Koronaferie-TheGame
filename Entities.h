@@ -10,13 +10,10 @@ class Entities
 {
 public:
 	Entities();
-	Entities(int id);
 
-	void spawnEntity();
-	void spawnEntity(string id);
-
-	void drawSelf();
-	void drawSelf(Mat map);
+	void drawAllEntities(Mat map, int mapSpeed);
+	void removeAllEntities();
+	void randomizeEntity(int loopCounter);
 
 	int progress;
 	int positionX;
@@ -26,5 +23,8 @@ public:
 	string identifier;
 
 private:
+
+	void drawSelf(Mat map);
+	void spawnEntity(string name);
 
 };

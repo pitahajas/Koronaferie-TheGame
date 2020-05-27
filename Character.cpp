@@ -12,6 +12,7 @@ Character::Character()
 	posY = 100;
 	maxHP = 10;
 	currentHP = 10;
+	characterSkin = 3;
 
 	isInvincible = false;
 	invincibleTimer = 0;

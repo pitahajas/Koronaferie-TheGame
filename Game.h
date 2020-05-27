@@ -14,41 +14,49 @@ using namespace cv;
 class Game
 {
 public:
+
+	int pressedKey;
+
+	double highScore;
+
+	void initialize();
+	void showWelcomeScreen();
+	void chooseCharacter();
+
+	void initializeGame();
+	void runGame();
+
+	string endGame();
+	string pauseGame();
+
+	bool isPlayerDead();
+
+private:
+
+	Mat src;
+	Mat map;
+	Entities entity[50];
+	Character Player;
+
+	string windowName;
+	string highScoreHolder;
+	
+	double score;
 	int resolutionHeigth;
 	int resolutionWidth;
 	int mapSpeed;
 	int mapPosition;
 	int mapMilestone;
-	int pressedKey;
-
-	double score;
-	double highScore;
-	string highScoreHolder;
-
-	void initialize();
-	void showWelcomeScreen();
-	void chooseCharacter();
-	void initializeGame();
-	void runMap();
-	void checkCollisions();
-	void checkCollisions(int i);
-
-	string endGame();
-	string pauseGame();
-
-	string windowName;
-	Mat map;
-	Entities entity[50];
-	Character Player;
-
-
-
-private:
-
-	Mat src;
 
 	void configRead();
 
+	void initializeVariables();
+	void showTutorial(Mat map);
+
+	void drawScoreBox(Mat map, double score);
+	void updateVariables();
+	void readInput(int pressedKey);
+
+	void checkCollisions(int loopCounter);
+
 };
-
-

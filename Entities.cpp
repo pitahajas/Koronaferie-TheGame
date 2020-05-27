@@ -18,38 +18,60 @@ Entities::Entities()
 	exists = false;
 }
 
-Entities::Entities(int id)
+void Entities::spawnEntity(string name)
 {
-	identifier = id;
-	positionX = 0;
-	positionY = 0;
-	progress = 0;
-	exists = false;
-}
-
-void Entities::spawnEntity() 
-{
-	identifier = "block";
+	identifier = name;
 	positionX = rand() % 800 + 100;
 	positionY = -50;
 	exists = true;
 	progress = 0;
-	cout << "\nREPORT: stworzono istotê.";
+	cout << "\nREPORT: stworzono istote.";
 }
 
-void Entities::spawnEntity(string id)
+void Entities::drawAllEntities(Mat map, int mapSpeed)
 {
-	identifier = id;
-	positionX = rand() % 800 + 100;
-	positionY = -50;
-	exists = true;
-	progress = 0;
-	cout << "\nREPORT: stworzono istotê.";
+	for (int i = 0; i < 50; i++)
+	{
+		if (this[i].exists == true)
+			this[i].drawSelf(map);
+
+		if (this[i].progress < 1050)
+			this[i].progress += mapSpeed;
+		else
+		{
+			this[i].exists = false;
+		}
+	}
 }
 
-void Entities::drawSelf()
+void Entities::removeAllEntities()
 {
-	cout << "\nERROR: próbowano narysowaæ istotê na niczym.";
+	for (int i = 0; i < 50; i++)
+	{
+		this[i].exists = false;
+		this[i].positionY = -50;
+	}
+}
+
+void Entities::randomizeEntity(int loopCounter)
+{
+	int randomizer;
+		if (rand() % 1500 < 2 && this[loopCounter].exists == false)
+		{
+			randomizer = rand() % 100;
+			if (randomizer < 30)
+				this[loopCounter].spawnEntity("block");
+			else if (randomizer >= 30 && randomizer < 45)
+				this[loopCounter].spawnEntity("koronawirus");
+			else if (randomizer >= 45 && randomizer < 65)
+				this[loopCounter].spawnEntity("accel");
+			else if (randomizer >= 65 && randomizer < 85)
+				this[loopCounter].spawnEntity("brake");
+			else if (randomizer >= 85 && randomizer < 95)
+				this[loopCounter].spawnEntity("pill");
+			else if (randomizer >= 95 && randomizer <= 100)
+				this[loopCounter].spawnEntity("mask");
+		}
 }
 
 void Entities::drawSelf(Mat map)

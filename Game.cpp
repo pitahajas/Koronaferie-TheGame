@@ -104,90 +104,126 @@ void Game::chooseCharacter() {
 
 void Game::initializeGame()
 {
-    src = Mat(11000, 1000, CV_32FC3); //Creating a Mat matrix for the full map
-    src = imread("Map.jpg", IMREAD_COLOR); //Storing the full map
-    src(Range(10000, 11000), Range(0, 1000)).copyTo(map); //Extracting Initial Region of Interest for the window and storing it in the matrix
-    Player.posX = 500;
-    Player.posY = 100;
-    Player.draw(map);
-    rectangle(map, Point(200, 450), Point(800, 550), Scalar(0, 0, 128), FILLED);
-    putText(map, "A,W,D,S - sterowanie postacia.", Point(220, 480), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
-    putText(map, "Wcisnij dowolny przycisk, by rozpoczac rozgrywke.", Point(220, 520), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
+    initializeVariables();
+
+    src = imread("Map.jpg", IMREAD_COLOR); // storing the full map in a matrix
+    src(Range(10000, 11000), Range(0, 1000)).copyTo(map); // extracting initial fragment of the full map and storing it in the 'map' matrix
+    Player.draw(map); // drawing player character
+
+    entity->removeAllEntities();
+
+    showTutorial(map);
+
     imshow(windowName, map);
     cout << "\nZaladowano mape.";
-    mapSpeed = 6;
-    mapPosition = 0;
-    mapMilestone = 0;
-    score = 0;
-    //^ Initial variable values, used in Game::runMap()
-    Player.currentHP = Player.maxHP;
-    Player.posX = 500;
-    Player.posY = 100;
-    pressedKey = -1;
-    for (int i = 0; i < 50; i++)
-    {
-        entity[i].exists = false;
-        entity[i].positionY = -50;
-    }
 
     waitKey();
 }
 
-void Game::runMap()
+void Game::initializeVariables()
 {
+    this->mapSpeed = 6;
+    this->mapPosition = 0;
+    this->mapMilestone = 0;
+    this->score = 0;
+    this->Player.currentHP = Player.maxHP;
+    this->Player.posX = 500;
+    this->Player.posY = 100;
+    this->pressedKey = -1;
+}
+
+void Game::showTutorial(Mat map)
+{
+    rectangle(map, Point(200, 450), Point(800, 550), Scalar(0, 0, 128), FILLED);
+    putText(map, "A,W,D,S - sterowanie postacia.", Point(220, 480), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
+    putText(map, "Wcisnij dowolny przycisk, by rozpoczac rozgrywke.", Point(220, 520), FONT_HERSHEY_PLAIN, 1, Scalar(255, 255, 255));
+}
+
+void Game::runGame()
+{
+    // redrawing map
     src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
 
-    Player.draw(map); //RYSOWANIE POSTACI
-    //ODCZYT KLAWIATURY
-    //pressedKey = waitKey(1);
-    if (pressedKey == 'w' && Player.posY <= 990) {
-        Player.posY += 6;
-    }
-    else if (pressedKey == 's' && Player.posY >= 10) {
-        Player.posY -= 10;
-    }
-    else if (pressedKey == 'd' && Player.posX <= 990) {
-        Player.posX += 15;
-    }
-    else if (pressedKey == 'a' && Player.posX >= 10) {
-        Player.posX -= 15;
-    }
-    //KONIEC ODCZYTU Z KLAWIATURY
+    Player.draw(map);
 
-    for (int i = 0; i < 50; i++) //RYSOWANIE ENTITIES
+    readInput(pressedKey);
+
+    for (int i = 0; i < 50; ++i)
     {
-        if (entity[i].exists == true)
-            entity[i].drawSelf(map);
+        entity->randomizeEntity(i);
+        checkCollisions(i);
 
-        if (entity[i].progress < 1050)
-            entity[i].progress += mapSpeed;
-        else
-        {
-            entity[i].exists = false;
-        }
     }
 
+    entity->drawAllEntities(map, mapSpeed);
+
+    drawScoreBox(map, score);
+
+    imshow(windowName, map);
+
+    updateVariables();
+
+
+    Sleep(10);
+}
+
+void Game::readInput(int pressedKey)
+{
+    // reading keyboard input
+
+    switch (pressedKey)
+    {
+    case 'w':
+        if (Player.posY <= 990)
+            this->Player.posY += 6;
+        break;
+    case 's':
+        if (Player.posY >= 10)
+            this->Player.posY -= 10;
+        break;
+    case 'd':
+        if (Player.posX <= 990)
+            this->Player.posX += 15;
+        break;
+    case 'a':
+        if (Player.posX >= 10)
+            this->Player.posX -= 15;
+        break;
+    }
+}
+
+void Game::drawScoreBox(Mat map, double score)
+{
     rectangle(map, Point(900, 0), Point(1000, 40), Scalar(0, 0, 0), FILLED);
     rectangle(map, Point(905, 5), Point(995, 35), Scalar(255, 255, 255), FILLED);
     putText(map, to_string(score), Point(910, 30), FONT_HERSHEY_PLAIN, 1, Scalar(0, 0, 0));
+}
 
+void Game::updateVariables()
+{
+    this->mapPosition += mapSpeed;
 
-    imshow(windowName, map);
-    mapPosition += mapSpeed;
+    // looping the map
     if (mapPosition >= 10000)
-        mapPosition -= 10000;
+        this->mapPosition -= 10000;
 
-    //cout << "\nPozycja mapy: " << mapPosition;
-    score += (double)mapSpeed / 100;
-    //cout << "\nWYNIK: " << (int)score;
-    mapMilestone += mapSpeed; //Tracking milestones every 1000 pixels for speed incrementation.
-    if (mapMilestone >= 1000)
+    // tracking score and converting to metres
+    this->score += (double)mapSpeed / 100;
+
+    // tracking milestones every 1000 pixels for speed incrementation.
+    this -> mapMilestone += this->mapSpeed;
+    if (this->mapMilestone >= 1000)
     {
-        mapSpeed += 1;
-        mapMilestone -= 1000;
-        cout << "\nMAP SPEED +1 = " << mapSpeed;
+        this->mapSpeed += 1;
+        this->mapMilestone -= 1000;
+        cout << "\nMAP SPEED +1 = " << this->mapSpeed;
     }
-    Sleep(10);
+
+    // tracking player invincibility time
+    if (Player.invincibleTimer > 0)
+        this->Player.invincibleTimer -= 1;
+    else
+        this->Player.isInvincible = false;
 }
 
 string Game::pauseGame()
@@ -205,36 +241,34 @@ string Game::pauseGame()
     }
 }
 
-void Game::checkCollisions() {}
-
-void Game::checkCollisions(int i)
+void Game::checkCollisions(int loopCounter)
 {
 
-    if (abs(Player.posX - entity[i].positionX) <= 100 && abs(1000 - Player.posY - (entity[i].positionY + entity[i].progress)) <= 100 && entity[i].exists == true)
+    if (abs(Player.posX - entity[loopCounter].positionX) <= 100 && abs(1000 - Player.posY - (entity[loopCounter].positionY + entity[loopCounter].progress)) <= 100 && entity[loopCounter].exists == true)
     {
-        cout << "\nKOLIZJA na: " << mapPosition << " z: " << entity[i].identifier;
-        entity[i].exists = false;
-        if (entity[i].identifier == "block" && Player.isInvincible == false)
+        cout << "\nKOLIZJA na: " << mapPosition << " z: " << entity[loopCounter].identifier;
+        entity[loopCounter].exists = false;
+        if (entity[loopCounter].identifier == "block" && Player.isInvincible == false)
         {
             Player.currentHP -= 1;
             cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
         }
         else
             cout << "\ninvincibleTimer: " << Player.invincibleTimer;
-        if (entity[i].identifier == "koronawirus" && Player.isInvincible == false)
+        if (entity[loopCounter].identifier == "koronawirus" && Player.isInvincible == false)
         {
             Player.currentHP -= 2;
             cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
         }
         else
             cout << "\ninvincibleTimer: " << Player.invincibleTimer;
-        if (entity[i].identifier == "accel")
+        if (entity[loopCounter].identifier == "accel")
         {
             mapSpeed += 2;
             cout << "\nmapSpeed: " << mapSpeed;
         }
         else
-            if (entity[i].identifier == "brake")
+            if (entity[loopCounter].identifier == "brake")
             {
                 mapSpeed -= 2;
                 if (mapSpeed < 6)
@@ -242,7 +276,7 @@ void Game::checkCollisions(int i)
                 cout << "\nmapSpeed: " << mapSpeed;
             }
             else
-                if (entity[i].identifier == "pill")
+                if (entity[loopCounter].identifier == "pill")
                 {
                     Player.currentHP += 3;
                     if (Player.currentHP > Player.maxHP)
@@ -250,7 +284,7 @@ void Game::checkCollisions(int i)
                     cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
                 }
                 else
-                    if (entity[i].identifier == "mask")
+                    if (entity[loopCounter].identifier == "mask")
                     {
                         Player.isInvincible = true;
                         Player.invincibleTimer = 200;
@@ -267,6 +301,7 @@ string Game::endGame()
         highScore = score;
         highScoreHolder = Player.characterName;
     }
+
     rectangle(map, Point(200, 200), Point(800, 800), Scalar(0, 0, 128), FILLED, 0);
     putText(map, "KONIEC GRY", Point(220, 320), FONT_HERSHEY_COMPLEX, 2.7, Scalar(255, 255, 255), 1, 8, false);
     putText(map, "Imie postaci: " + Player.characterName, Point(220, 400), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
@@ -275,9 +310,10 @@ string Game::endGame()
     putText(map, "Wlasciciel rekordu: " + highScoreHolder, Point(220, 610), FONT_HERSHEY_COMPLEX, 1, Scalar(255, 255, 255), 1, 8, false);
     putText(map, "Escape - Wyjscie  Spacja - restart.", Point(250, 750), FONT_HERSHEY_SIMPLEX, 0.8, Scalar(255, 255, 255), 1, 8, false);
     imshow(windowName, map);
+
     while (true)
     {
-        int key = waitKey();
+        int key = waitKey(20);
         if (key == 32)
             return "restart";
         else if (key == 27)
@@ -286,8 +322,10 @@ string Game::endGame()
 
 }
 
-
-
-
-
-
+bool Game::isPlayerDead()
+{
+    if (Player.currentHP <= 0)
+        return true;
+    else
+        return false;
+}
