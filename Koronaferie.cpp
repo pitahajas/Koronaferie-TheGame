@@ -10,71 +10,41 @@ int main()
 {
 
     Game Koronaferie;
+    int pressedKey;
 
     Koronaferie.initialize(); //Initialization of the main game window
     Koronaferie.showWelcomeScreen(); //Displaying welcome animation loop
     Koronaferie.highScore = 0;
-    Launch:
-    Koronaferie.chooseCharacter();
-    Koronaferie.initializeGame();
 
-    int randomizer;
-    int pressedKey;
-
-    while (true)
+    do
     {
-        Koronaferie.runMap();
-        for (int i = 0; i < 50; i++)
+        Koronaferie.chooseCharacter();
+        Koronaferie.initializeGame();
+
+        while (true)
         {
-            if (rand() % 1500 < 2 && Koronaferie.entity[i].exists == false)
+            Koronaferie.runGame();
+
+            pressedKey = waitKey(1);
+
+            if (pressedKey == 32) //Pressing space
             {
-                randomizer = rand() % 100;
-                if(randomizer <30)
-                    Koronaferie.entity[i].spawnEntity("block");
-                else if(randomizer >=30 && randomizer <45)
-                    Koronaferie.entity[i].spawnEntity("koronawirus");
-                else if (randomizer >= 45 && randomizer < 65)
-                    Koronaferie.entity[i].spawnEntity("accel");
-                else if (randomizer >= 65 && randomizer < 85)
-                    Koronaferie.entity[i].spawnEntity("brake");
-                else if (randomizer >= 85 && randomizer < 95)
-                    Koronaferie.entity[i].spawnEntity("pill");
-                else if (randomizer >= 95 && randomizer <= 100)
-                    Koronaferie.entity[i].spawnEntity("mask");
+                if (Koronaferie.pauseGame() == "Escape")
+                    return 0;
+            }
+            else if (pressedKey == 'w' || pressedKey == 'a' || pressedKey == 's' || pressedKey == 'd')
+            {
+                cout << "INPUT: " << pressedKey;
+                Koronaferie.pressedKey = pressedKey;
             }
 
-
-            Koronaferie.checkCollisions(i);
+            if (Koronaferie.isPlayerDead() == true)
+            {
+                break;
+            }
         }
 
-        if (Koronaferie.Player.invincibleTimer > 0)
-            Koronaferie.Player.invincibleTimer -= 1;
-        else
-            Koronaferie.Player.isInvincible = false;
-
-
-        pressedKey = waitKey(1);
-
-        if (pressedKey == 32) //Pressing space
-
-        {
-            if (Koronaferie.pauseGame() == "Escape")
-                return 0;
-        }
-        else if (pressedKey == 'w' || pressedKey == 'a' || pressedKey == 's' || pressedKey == 'd')
-        {
-            cout << "\nPressedKey: " << pressedKey;
-            Koronaferie.pressedKey = pressedKey;
-        }
-        if (Koronaferie.Player.currentHP <= 0)
-        {
-            if(Koronaferie.endGame()=="escape")
-                return 0;
-            else
-                goto Launch;
-        }
-    }
-
+    } while (Koronaferie.endGame() != "escape");
 
     return 0;
 }
