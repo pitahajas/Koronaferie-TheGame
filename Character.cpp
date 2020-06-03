@@ -1,4 +1,5 @@
 #include "Game.h"
+
 #include<opencv2/opencv.hpp>
 #include<iostream>
 #include<string>
@@ -18,7 +19,43 @@ Character::Character()
 	invincibleTimer = 0;
 }
 
-void Character::draw() {}
+bool Character::checkCollision(int obstaclePositionX, int obstaclePositionY, string obstacleIdentifier, int mapPosition, int mapSpeed)
+{
+    if (abs(posX - obstaclePositionX) <= 100 && abs(1000 - posY - (obstaclePositionY)) <= 100)
+    {
+        cout << "\nKOLIZJA na: " << mapPosition << " z: " << obstacleIdentifier;
+        if (obstacleIdentifier == "block" && isInvincible == false)
+        {
+            currentHP -= 1;
+            cout << "\nHP: " << currentHP << "/" << maxHP;
+        }
+        else
+            cout << "\ninvincibleTimer: " << invincibleTimer;
+        if (obstacleIdentifier == "koronawirus" && isInvincible == false)
+        {
+            currentHP -= 2;
+            cout << "\nHP: " << currentHP << "/" << maxHP;
+        }
+        else
+            cout << "\ninvincibleTimer: " << invincibleTimer;
+        if (obstacleIdentifier == "pill")
+        {
+            currentHP += 3;
+            if (currentHP > maxHP)
+                currentHP = maxHP;
+            cout << "\nHP: " << currentHP << "/" << maxHP;
+        }
+        else
+            if (obstacleIdentifier == "mask")
+            {
+                isInvincible = true;
+                invincibleTimer = 200;
+                cout << "\ninvincibleTimer: " << invincibleTimer;
+            }
+                return true;
+    }
+    else return false;
+}
 
 void Character::draw(Mat mapinput) {
 

@@ -44,9 +44,9 @@ private:
 	double score;
 	int resolutionHeigth;
 	int resolutionWidth;
-	int mapSpeed;
-	int mapPosition;
 	int mapMilestone;
+	int mapPosition;
+	int mapSpeed;
 
 	void configRead();
 
@@ -56,7 +56,5 @@ private:
 	void drawScoreBox(Mat map, double score);
 	void updateVariables();
 	void readInput(int pressedKey);
-
-	void checkCollisions(int loopCounter);
 
 };

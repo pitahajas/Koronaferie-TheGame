@@ -15,7 +15,6 @@ public:
 	void removeAllEntities();
 	void randomizeEntity(int loopCounter);
 
-	int progress;
 	int positionX;
 	int positionY;
 	bool exists;

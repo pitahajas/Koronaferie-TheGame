@@ -151,8 +151,24 @@ void Game::runGame()
     for (int i = 0; i < 50; ++i)
     {
         entity->randomizeEntity(i);
-        checkCollisions(i);
 
+        if (entity[i].exists == true)
+            if (Player.checkCollision(entity[i].positionX, entity[i].positionY, entity[i].identifier, mapPosition, mapSpeed) == true)
+            {
+                entity[i].exists = false;
+                if (entity[i].identifier == "accel")
+                {
+                    mapSpeed += 2;
+                    if (mapSpeed > 100)
+                        mapSpeed = 100;
+                }
+                else if (entity[i].identifier == "brake")
+                {
+                        mapSpeed -= 2;
+                        if (mapSpeed < 6)
+                            mapSpeed = 6;
+                }
+            }
     }
 
     entity->drawAllEntities(map, mapSpeed);
@@ -216,6 +232,8 @@ void Game::updateVariables()
     {
         this->mapSpeed += 1;
         this->mapMilestone -= 1000;
+        if (mapSpeed > 100)
+            mapSpeed = 100;
         cout << "\nMAP SPEED +1 = " << this->mapSpeed;
     }
 
@@ -238,59 +256,6 @@ string Game::pauseGame()
             return "Escape";
         else if (input == 32)
             return "Space";
-    }
-}
-
-void Game::checkCollisions(int loopCounter)
-{
-
-    if (abs(Player.posX - entity[loopCounter].positionX) <= 100 && abs(1000 - Player.posY - (entity[loopCounter].positionY + entity[loopCounter].progress)) <= 100 && entity[loopCounter].exists == true)
-    {
-        cout << "\nKOLIZJA na: " << mapPosition << " z: " << entity[loopCounter].identifier;
-        entity[loopCounter].exists = false;
-        if (entity[loopCounter].identifier == "block" && Player.isInvincible == false)
-        {
-            Player.currentHP -= 1;
-            cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
-        }
-        else
-            cout << "\ninvincibleTimer: " << Player.invincibleTimer;
-        if (entity[loopCounter].identifier == "koronawirus" && Player.isInvincible == false)
-        {
-            Player.currentHP -= 2;
-            cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
-        }
-        else
-            cout << "\ninvincibleTimer: " << Player.invincibleTimer;
-        if (entity[loopCounter].identifier == "accel")
-        {
-            mapSpeed += 2;
-            cout << "\nmapSpeed: " << mapSpeed;
-        }
-        else
-            if (entity[loopCounter].identifier == "brake")
-            {
-                mapSpeed -= 2;
-                if (mapSpeed < 6)
-                    mapSpeed = 6;
-                cout << "\nmapSpeed: " << mapSpeed;
-            }
-            else
-                if (entity[loopCounter].identifier == "pill")
-                {
-                    Player.currentHP += 3;
-                    if (Player.currentHP > Player.maxHP)
-                        Player.currentHP = Player.maxHP;
-                    cout << "\nHP: " << Player.currentHP << "/" << Player.maxHP;
-                }
-                else
-                    if (entity[loopCounter].identifier == "mask")
-                    {
-                        Player.isInvincible = true;
-                        Player.invincibleTimer = 200;
-                        cout << "\ninvincibleTimer: " << Player.invincibleTimer;
-                    }
-
     }
 }
 
