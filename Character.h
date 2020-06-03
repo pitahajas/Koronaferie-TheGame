@@ -21,8 +21,8 @@ public:
 	bool isInvincible;
 	int invincibleTimer;
 
-	void draw();
 	void draw(Mat mapinput);
+	bool checkCollision(int obstaclePositionX, int obstaclePositionY, string obstacleIdentifier, int mapPosition, int mapSpeed);
 
 private:
 
