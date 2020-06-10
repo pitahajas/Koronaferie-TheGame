@@ -26,5 +26,7 @@ public:
 
 private:
 
+	bool skinInitialized = false;
+
 
 };
