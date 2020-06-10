@@ -58,31 +58,31 @@ bool Character::checkCollision(int obstaclePositionX, int obstaclePositionY, str
 
 void Character::draw(Mat mapinput) {
 
-    //DRAWING "KRZYSZTOF BANAN" - SKIN 1
+    //DRAWING "KRYSTIAN BANAN" - SKIN 1
     if (characterSkin == 1) {
         Point czupryna[1][14]; //Initialize array of points
 
         //Declare new points positions of hair polygon
-        czupryna[0][0] = Point(posX, 1000 - posY + 70);
-        czupryna[0][1] = Point(posX + 10, 1000 - posY + 20);
-        czupryna[0][2] = Point(posX + 60, 1000 - posY + 20);
-        czupryna[0][3] = Point(posX + 30, 1000 - posY);
-        czupryna[0][4] = Point(posX + 60, 1000 - posY - 20);
-        czupryna[0][5] = Point(posX + 25, 1000 - posY - 40);
-        czupryna[0][6] = Point(posX + 35, 1000 - posY - 80);
-        czupryna[0][7] = Point(posX, 1000 - posY - 70);
-        czupryna[0][8] = Point(posX - 35, 1000 - posY - 80);
-        czupryna[0][9] = Point(posX - 25, 1000 - posY - 40);
-        czupryna[0][10] = Point(posX - 60, 1000 - posY - 20);
-        czupryna[0][11] = Point(posX - 30, 1000 - posY);
-        czupryna[0][12] = Point(posX - 60, 1000 - posY + 20);
-        czupryna[0][13] = Point(posX - 10, 1000 - posY + 20);
+        czupryna[0][0] = Point(posX, 1000 - posY - 90);
+        czupryna[0][1] = Point(posX + 10, 1000 - posY - 40);
+        czupryna[0][2] = Point(posX + 60, 1000 - posY - 40);
+        czupryna[0][3] = Point(posX + 30, 1000 - posY - 20);
+        czupryna[0][4] = Point(posX + 60, 1000 - posY);
+        czupryna[0][5] = Point(posX + 25, 1000 - posY + 20);
+        czupryna[0][6] = Point(posX + 35, 1000 - posY + 60);
+        czupryna[0][7] = Point(posX, 1000 - posY + 50);
+        czupryna[0][8] = Point(posX - 35, 1000 - posY + 60);
+        czupryna[0][9] = Point(posX - 25, 1000 - posY + 20);
+        czupryna[0][10] = Point(posX - 60, 1000 - posY);
+        czupryna[0][11] = Point(posX - 30, 1000 - posY - 20);
+        czupryna[0][12] = Point(posX - 60, 1000 - posY - 40);
+        czupryna[0][13] = Point(posX - 10, 1000 - posY - 40);
 
         const Point* ppt[1] = { czupryna[0] };
         int npt[] = { 14 };
 
-        //Draw "Krzysztof Banan" - skin 1
         circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(255, 204, 204), FILLED);
+        circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(0, 0, 0), 1);
         line(mapinput, Point(posX + 10, 950 - posY), Point(posX + 35, 950 - posY), Scalar(255, 0, 0), 2);
         line(mapinput, Point(posX - 10, 950 - posY), Point(posX - 35, 950 - posY), Scalar(255, 0, 0), 2);
         line(mapinput, Point(posX + 35, 950 - posY), Point(posX + 45, 1000 - posY), Scalar(255, 0, 0), 2);
@@ -94,6 +94,7 @@ void Character::draw(Mat mapinput) {
     if (characterSkin == 2) {
         //body
         circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(188, 231, 255), FILLED);
+        circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(0, 0, 0), 1);
         //eyeballs
         circle(mapinput, Point(posX + 15, 975 - posY), 5, Scalar(255, 255, 255), FILLED);
         circle(mapinput, Point(posX - 15, 975 - posY), 5, Scalar(255, 255, 255), FILLED);
@@ -131,10 +132,11 @@ void Character::draw(Mat mapinput) {
         fillPoly(mapinput, ppt, npt, 1, Scalar(0, 51, 102), LINE_8);
     }
 
-    //DRAWING "KAKUB JANICKI" - SKIN 3
+    //DRAWING "KAKUB NIEJANICKI" - SKIN 3
     if (characterSkin == 3) {
         //body
         circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(204, 204, 255), FILLED);
+        circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(0, 0, 0), 1);
         //eyeballs
         circle(mapinput, Point(posX + 15, 975 - posY), 8, Scalar(0, 255, 0), FILLED);
         circle(mapinput, Point(posX - 15, 975 - posY), 8, Scalar(0, 255, 0), FILLED);
@@ -152,6 +154,63 @@ void Character::draw(Mat mapinput) {
         line(mapinput, Point(posX - 7, 960 - posY), Point(posX + 7, 960 - posY), Scalar(20, 20, 20), 1);
         line(mapinput, Point(posX - 7, 958 - posY), Point(posX - 7, 962 - posY), Scalar(20, 20, 20), 1);
         line(mapinput, Point(posX + 7, 958 - posY), Point(posX + 7, 962 - posY), Scalar(20, 20, 20), 1);
+    }
+
+    //DRAWING "DIABE£EK" - SKIN 4
+    if (characterSkin == 4) {
+        //body
+        circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(0, 0, 200), FILLED);
+        circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(0, 0, 0), 1);
+        //eyeballs
+        circle(mapinput, Point(posX + 15, 975 - posY), 8, Scalar(200, 200, 255), FILLED);
+        circle(mapinput, Point(posX - 15, 975 - posY), 8, Scalar(200, 200, 255), FILLED);
+        //pupils
+        circle(mapinput, Point(posX + 16, 970 - posY), 4, Scalar(0, 0, 255), FILLED);
+        circle(mapinput, Point(posX + 16, 970 - posY), 4, Scalar(0, 0, 0), 1);
+        circle(mapinput, Point(posX - 16, 970 - posY), 4, Scalar(0, 0, 255), FILLED);
+        circle(mapinput, Point(posX - 16, 970 - posY), 4, Scalar(0, 0, 0), 1);
+        //horns
+        line(mapinput, Point(posX + 25, 990 - posY), Point(posX + 40, 985 - posY), Scalar(0, 0, 100), 2);
+        line(mapinput, Point(posX + 40, 985 - posY), Point(posX + 30, 1000 - posY), Scalar(0, 0, 150), 2);
+        line(mapinput, Point(posX - 25, 990 - posY), Point(posX - 40, 985 - posY), Scalar(0, 0, 100), 2);
+        line(mapinput, Point(posX - 40, 985 - posY), Point(posX - 30, 1000 - posY), Scalar(0, 0, 150), 2);
+        //tail
+        line(mapinput, Point(posX, 1020 - posY), Point(posX + 15, 1040 - posY), Scalar(0, 0, 80), 3);
+        line(mapinput, Point(posX + 15, 1040 - posY), Point(posX - 20, 1050 - posY), Scalar(0, 0, 120), 3);
+        line(mapinput, Point(posX - 20, 1050 - posY), Point(posX, 1065 - posY), Scalar(0, 0, 80), 3);
+        line(mapinput, Point(posX, 1065 - posY), Point(posX - 3, 1055 - posY), Scalar(0, 0, 100), 3);
+        line(mapinput, Point(posX, 1065 - posY), Point(posX - 8, 1065 - posY), Scalar(0, 0, 130), 3);
+        //mounth
+        line(mapinput, Point(posX - 7, 958 - posY), Point(posX - 4, 962 - posY), Scalar(20, 20, 20), 1);
+        line(mapinput, Point(posX - 4, 962 - posY), Point(posX, 955 - posY), Scalar(20, 20, 20), 1);
+        line(mapinput, Point(posX, 955 - posY), Point(posX + 2, 964 - posY), Scalar(20, 20, 20), 1);
+        line(mapinput, Point(posX + 2, 964 - posY), Point(posX + 7, 959 - posY), Scalar(20, 20, 20), 1);
+    }
+
+    //DRAWING "ANIO£EK" - SKIN 5
+    if (characterSkin == 5) {
+        //body
+        circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(255, 255, 100), FILLED);
+        circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(0, 0, 0), 1);
+        //eyeballs
+        circle(mapinput, Point(posX + 15, 975 - posY), 8, Scalar(255, 255, 255), FILLED);
+        circle(mapinput, Point(posX - 15, 975 - posY), 8, Scalar(255, 255, 255), FILLED);
+        //pupils
+        circle(mapinput, Point(posX + 16, 970 - posY), 4, Scalar(255, 128, 0), FILLED);
+        circle(mapinput, Point(posX - 16, 970 - posY), 4, Scalar(255, 128, 0), FILLED);
+        //wings
+        line(mapinput, Point(posX + 30, 995 - posY), Point(posX + 50, 1000 - posY), Scalar(0, 255, 255), 5);
+        line(mapinput, Point(posX + 30, 998 - posY), Point(posX + 60, 1010 - posY), Scalar(20, 230, 255), 5);
+        line(mapinput, Point(posX + 30, 1003 - posY), Point(posX + 60, 1020 - posY), Scalar(40, 210, 255), 5);
+        line(mapinput, Point(posX - 30, 995 - posY), Point(posX - 50, 1000 - posY), Scalar(0, 255, 255), 5);
+        line(mapinput, Point(posX - 30, 998 - posY), Point(posX - 60, 1010 - posY), Scalar(20, 230, 255), 5);
+        line(mapinput, Point(posX - 30, 1003 - posY), Point(posX - 60, 1020 - posY), Scalar(40, 210, 255), 5);
+        //aura ring
+        circle(mapinput, Point(posX, 1022 - posY), 30, Scalar(0, 200, 230), 2);
+        circle(mapinput, Point(posX, 1020 - posY), 30, Scalar(40, 255, 255), 2);
+        //mounth
+        line(mapinput, Point(posX - 7, 960 - posY), Point(posX, 958 - posY), Scalar(0, 0, 255), 2);
+        line(mapinput, Point(posX, 958 - posY), Point(posX + 7, 960 - posY), Scalar(0, 0, 255), 2);
     }
 
     //health bar gui
