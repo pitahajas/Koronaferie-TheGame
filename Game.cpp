@@ -145,9 +145,6 @@ void Game::runGame()
     // redrawing map
     src(Range(10000 - mapPosition, 11000 - mapPosition), Range(0, 1000)).copyTo(map);
 
-    Player.draw(map);
-
-    readInput(pressedKey);
 
     for (int i = 0; i < 50; ++i)
     {
@@ -171,6 +168,10 @@ void Game::runGame()
                 }
             }
     }
+    
+    readInput(pressedKey);
+        
+    Player.draw(map);
 
     entity->drawAllEntities(map, mapSpeed);
 
