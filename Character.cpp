@@ -48,7 +48,7 @@ bool Character::checkCollision(int obstaclePositionX, int obstaclePositionY, str
             if (obstacleIdentifier == "mask")
             {
                 isInvincible = true;
-                invincibleTimer = 200;
+                invincibleTimer = 400; //100 ~= 1 sekunda
                 cout << "\ninvincibleTimer: " << invincibleTimer;
             }
                 return true;
@@ -156,7 +156,7 @@ void Character::draw(Mat mapinput) {
         line(mapinput, Point(posX + 7, 958 - posY), Point(posX + 7, 962 - posY), Scalar(20, 20, 20), 1);
     }
 
-    //DRAWING "DIABE£EK" - SKIN 4
+    //DRAWING "DIABEÂ£EK" - SKIN 4
     if (characterSkin == 4) {
         //body
         circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(0, 0, 200), FILLED);
@@ -187,7 +187,7 @@ void Character::draw(Mat mapinput) {
         line(mapinput, Point(posX + 2, 964 - posY), Point(posX + 7, 959 - posY), Scalar(20, 20, 20), 1);
     }
 
-    //DRAWING "ANIO£EK" - SKIN 5
+    //DRAWING "ANIOÂ£EK" - SKIN 5
     if (characterSkin == 5) {
         //body
         circle(mapinput, Point(posX, 1000 - posY), 50, Scalar(255, 255, 100), FILLED);
